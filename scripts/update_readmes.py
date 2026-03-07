@@ -46,6 +46,12 @@ VERSION_RE = re.compile(r"_v(\d+(?:\.\d+)*)\.tsv$")
 # Data structures
 # ---------------------------------------------------------------------------
 
+# Folders treated as semantic workflow references (canonical for consistency checking)
+WORKFLOW_FOLDERS = {"workflows"}
+# Folders treated as user-facing overview workflows (excluded from consistency checking)
+USER_WORKFLOW_FOLDERS = {"user_workflows"}
+
+
 @dataclass
 class ModelFolder:
     """All discovered content for a single model folder."""
@@ -53,6 +59,20 @@ class ModelFolder:
     folder_path: Path
     tsv_files: List[Path] = field(default_factory=list)
     txt_files: List[Path] = field(default_factory=list)
+
+    @property
+    def category(self) -> str:
+        """
+        Classify the folder's role:
+          workflow      -- semantic CIDOC CRM workflow/overview reference
+          user_workflow -- simplified user-facing overview
+          model         -- standard domain model
+        """
+        if self.folder_name in WORKFLOW_FOLDERS:
+            return "workflow"
+        if self.folder_name in USER_WORKFLOW_FOLDERS:
+            return "user_workflow"
+        return "model"
 
     @property
     def status(self) -> str:
@@ -75,6 +95,10 @@ class ModelFolder:
 
     @property
     def status_badge(self) -> str:
+        if self.category == "workflow":
+            return "![Semantic Workflow](https://img.shields.io/badge/type-semantic--workflow-blue)"
+        if self.category == "user_workflow":
+            return "![User Workflow](https://img.shields.io/badge/type-user--workflow-blueviolet)"
         badges = {
             "formed":    "![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen)",
             "mixed":     "![Status: Mixed](https://img.shields.io/badge/status-mixed-yellow)",
@@ -165,13 +189,16 @@ def get_git_dates(file_path: Path) -> Tuple[str, str]:
 # Discovery
 # ---------------------------------------------------------------------------
 
+EXCLUDED_FOLDERS = {"old_samples"}
+
+
 def discover_models() -> Dict[str, ModelFolder]:
     """
     Discover all model folders under models/ and classify their contents.
     Returns a dict keyed by folder name.
-    Excludes the top-level models/ directory itself and legacy folders.
+    Excludes legacy folders defined in EXCLUDED_FOLDERS.
+    Folders are categorised as workflow, user_workflow, or model via ModelFolder.category.
     """
-    EXCLUDED = {"old_samples"}
     folders: Dict[str, ModelFolder] = {}
 
     if not MODELS_DIR.exists():
@@ -180,7 +207,7 @@ def discover_models() -> Dict[str, ModelFolder]:
     for child in sorted(MODELS_DIR.iterdir()):
         if not child.is_dir():
             continue
-        if child.name in EXCLUDED:
+        if child.name in EXCLUDED_FOLDERS:
             continue
 
         tsv_files = sorted(child.glob("*_v*.tsv"))
@@ -352,39 +379,88 @@ def model_title_from_folder(folder_name: str) -> str:
     return base[:1].upper() + base[1:]
 
 
-def generate_model_list_block(
-    folders: Dict[str, ModelFolder], raw_base: str
-) -> str:
-    """
-    Full model index table for the top-level README.
-    Covers all folder statuses. Uses Markdown (GitHub renders this well at root).
-    """
-    if not folders:
-        return "_No model folders detected yet._"
-
-    lines = [
-        "| Model | Status | Folder | Latest TSV | Visualisation |",
-        "|-------|--------|--------|-----------|---------------|",
-    ]
-
+def _model_table_rows(
+    folders: Dict[str, ModelFolder],
+    raw_base: str,
+    prefix: str = "models/",
+) -> List[str]:
+    """Generate table rows for a set of model folders."""
+    rows: List[str] = []
     for name, mf in sorted(folders.items()):
         title = model_title_from_folder(name)
         badge = mf.status_badge
-        folder_link = f"[`models/{name}`](models/{name}/)"
+        folder_link = f"[`{prefix}{name}`]({prefix}{name}/)"
 
-        if mf.status in ("formed", "mixed") and mf.latest_tsv:
+        if mf.latest_tsv:
             ver = mf.latest_version_str
             tsv_link = f"[v{ver}]({raw_url(raw_base, mf.latest_tsv)})"
             vis_link = f"[Open]({modeller_url(raw_base, mf.latest_tsv)})"
-        elif mf.status in ("precursor", "mixed") and mf.txt_files:
+        elif mf.txt_files:
             tsv_link = "_Precursor files only_"
             vis_link = "--"
         else:
             tsv_link = "--"
             vis_link = "--"
 
-        lines.append(f"| {title} | {badge} | {folder_link} | {tsv_link} | {vis_link} |")
+        rows.append(f"| {title} | {badge} | {folder_link} | {tsv_link} | {vis_link} |")
+    return rows
 
+
+def _model_table(
+    folders: Dict[str, ModelFolder],
+    raw_base: str,
+    heading: str,
+    description: str,
+    prefix: str = "models/",
+) -> List[str]:
+    """Generate a complete labelled table section for a category of folders."""
+    if not folders:
+        return []
+    lines = [
+        f"### {heading}",
+        "",
+        description,
+        "",
+        "| Name | Type / Status | Folder | Latest TSV | Visualisation |",
+        "|------|--------------|--------|-----------|---------------|",
+    ]
+    lines += _model_table_rows(folders, raw_base, prefix)
+    lines.append("")
+    return lines
+
+
+def generate_model_list_block(
+    folders: Dict[str, ModelFolder], raw_base: str
+) -> str:
+    """
+    Full model index for the top-level README, split into three sections:
+    semantic workflows, user workflows, and standard models.
+    """
+    workflows = {n: mf for n, mf in folders.items() if mf.category == "workflow"}
+    user_wf = {n: mf for n, mf in folders.items() if mf.category == "user_workflow"}
+    models = {n: mf for n, mf in folders.items() if mf.category == "model"}
+
+    if not folders:
+        return "_No model folders detected yet._"
+
+    lines: List[str] = []
+    lines += _model_table(
+        workflows, raw_base,
+        "Semantic workflow overviews",
+        "CIDOC CRM-aligned inter-model connectivity references. "
+        "These act as the canonical reference for shared node labels across individual models.",
+    )
+    lines += _model_table(
+        user_wf, raw_base,
+        "User workflow overviews",
+        "Simplified overviews for communication and stakeholder agreement. "
+        "Not part of the semantic consistency check.",
+    )
+    lines += _model_table(
+        models, raw_base,
+        "Domain models",
+        "Individual CIDOC CRM domain models, each covering a specific aspect of heritage science documentation.",
+    )
     return "\n".join(lines)
 
 
@@ -414,37 +490,32 @@ def generate_models_folder_block(
             )
         pieces.append("")
 
-    # Per-folder index -- mirrors the top-level table
-    pieces.append("### Model folders\n")
+    # Per-folder index split by category
+    workflows = {n: mf for n, mf in folders.items() if mf.category == "workflow"}
+    user_wf = {n: mf for n, mf in folders.items() if mf.category == "user_workflow"}
+    models = {n: mf for n, mf in folders.items() if mf.category == "model"}
 
-    if not folders:
+    pieces += _model_table(
+        workflows, raw_base,
+        "Semantic workflow overviews",
+        "CIDOC CRM-aligned inter-model connectivity references.",
+        prefix="./",
+    )
+    pieces += _model_table(
+        user_wf, raw_base,
+        "User workflow overviews",
+        "Simplified overviews for communication and stakeholder agreement.",
+        prefix="./",
+    )
+    pieces += _model_table(
+        models, raw_base,
+        "Domain models",
+        "Individual CIDOC CRM domain models.",
+        prefix="./",
+    )
+
+    if not (workflows or user_wf or models):
         pieces.append("_No model folders detected yet._")
-        return "\n".join(pieces)
-
-    pieces += [
-        "| Model | Status | Folder | Latest TSV | Visualisation |",
-        "|-------|--------|--------|-----------|---------------|",
-    ]
-
-    for name, mf in sorted(folders.items()):
-        title = model_title_from_folder(name)
-        badge = mf.status_badge
-        folder_link = f"[`{name}/`](./{name}/)"
-
-        if mf.status in ("formed", "mixed") and mf.latest_tsv:
-            ver = mf.latest_version_str
-            tsv_link = f"[v{ver}]({raw_url(raw_base, mf.latest_tsv)})"
-            vis_link = f"[Open]({modeller_url(raw_base, mf.latest_tsv)})"
-        elif mf.txt_files:
-            tsv_link = "_Precursor only_"
-            vis_link = "--"
-        else:
-            tsv_link = "--"
-            vis_link = "--"
-
-        pieces.append(
-            f"| {title} | {badge} | {folder_link} | {tsv_link} | {vis_link} |"
-        )
 
     return "\n".join(pieces)
 

@@ -41,8 +41,8 @@ MODELS_DIR = REPO_ROOT / "models"
 REPORTS_DIR = REPO_ROOT / "reports"
 REPORT_FILE = REPORTS_DIR / "consistency_report.md"
 
-EXCLUDED_FOLDERS = {"old_samples"}
-WORKFLOW_FOLDER = "workflows"
+EXCLUDED_FOLDERS = {"old_samples", "user_workflows"}
+WORKFLOW_FOLDERS = {"workflows"}
 
 # ---------------------------------------------------------------------------
 # Data structures
@@ -217,7 +217,7 @@ def discover_model_files() -> List[ModelFile]:
             continue
         if child.name in EXCLUDED_FOLDERS:
             continue
-        is_workflow = child.name == WORKFLOW_FOLDER
+        is_workflow = child.name in WORKFLOW_FOLDERS
         latest = latest_tsv_in_folder(child)
         if latest is not None:
             files.append(ModelFile(
@@ -295,32 +295,34 @@ def analyse(files: List[ModelFile]) -> Dict:
             predicate_variants[key] = dict(label_map)
 
     # Workflow vs individual discrepancies:
-    # Cases where workflow uses label X but individual models use label Y
-    # for the same (predicate, class_code) key
-    workflow_discrepancies: List[Dict] = []
+    # Build a model-centric index: for each individual model file, collect the
+    # changes it needs to make to align with the workflow canonical labels.
+    # Structure: {short_file_name -> [{predicate, class_code, current_label, canonical_labels}]}
+    model_centric: Dict[str, List[Dict]] = defaultdict(list)
+
     for key, wf_labels in workflow_labels.items():
         ind = individual_labels.get(key)
         if not ind:
             continue
         ind_labels = set(ind.keys())
-        # Discrepancy: workflow label not present in individual models, or vice versa
-        only_in_workflow = wf_labels - ind_labels
         only_in_individual = ind_labels - wf_labels
-        if only_in_workflow or only_in_individual:
-            workflow_discrepancies.append({
-                "predicate": key[0],
-                "class_code": key[1],
-                "workflow_labels": wf_labels,
-                "individual_labels": ind,
-                "only_in_workflow": only_in_workflow,
-                "only_in_individual": only_in_individual,
-            })
+        if not only_in_individual:
+            continue
+        # For each non-canonical label, record which files use it
+        for label in sorted(only_in_individual):
+            for sname in sorted(ind[label]):
+                model_centric[sname].append({
+                    "predicate": key[0],
+                    "class_code": key[1],
+                    "current_label": label,
+                    "canonical_labels": wf_labels,
+                })
 
     return {
         "node_index": dict(node_index),
         "shared_nodes": shared_nodes,
         "predicate_variants": predicate_variants,
-        "workflow_discrepancies": workflow_discrepancies,
+        "model_centric": dict(model_centric),
         "individual_labels": individual_labels,
     }
 
@@ -361,46 +363,45 @@ def generate_report(
     ]
 
     # -----------------------------------------------------------------------
-    # Section 1: Workflow vs individual model discrepancies (highest priority)
+    # Section 1: Model update checklist (workflow-centric)
     # -----------------------------------------------------------------------
-    discrepancies = analysis["workflow_discrepancies"]
+    model_centric = analysis["model_centric"]
     lines += [
-        "## 1. Workflow/overview vs individual model discrepancies",
+        "## 1. Model update checklist",
         "",
-        "These are cases where the workflow (overview) TSV uses a different label "
-        "than one or more individual models for a node with the same CRM class code "
-        "connected via the same property. These are the highest-priority candidates "
-        "for review, as they represent likely inter-model join breaks.",
+        "Each entry below lists an individual model file that contains node labels "
+        "which differ from the canonical labels used in the workflow/overview TSV. "
+        "The workflow is treated as the reference. Update the model file to use the "
+        "canonical label, then increment its version number.",
         "",
     ]
 
-    if not discrepancies:
-        lines.append("_No discrepancies detected between workflow and individual models._\n")
+    if not model_centric:
+        lines.append("_All individual models are consistent with the workflow labels._\n")
     else:
+        # Summary count
+        total_changes = sum(len(v) for v in model_centric.values())
         lines += [
-            md_table_row(
-                "Property", "Class code",
-                "Workflow label(s)", "Individual model label(s)", "Files affected"
-            ),
-            md_table_row("---", "---", "---", "---", "---"),
+            f"**Models requiring updates:** {len(model_centric)}  ",
+            f"**Total label changes needed:** {total_changes}  ",
+            "",
         ]
-        for d in sorted(discrepancies, key=lambda x: (x["class_code"], x["predicate"])):
-            pred = d["predicate"]
-            code = d["class_code"]
-            wf = "<br/>".join(sorted(d["workflow_labels"]))
-            ind_parts = []
-            for label, file_set in sorted(d["individual_labels"].items()):
-                marker = " ⚠" if label in d["only_in_individual"] else ""
-                ind_parts.append(f"`{label}`{marker}: {', '.join(sorted(file_set))}")
-            ind_str = "<br/>".join(ind_parts)
-            # Files affected: all individual files that have any variant label
-            all_files: Set[str] = set()
-            for fs in d["individual_labels"].values():
-                all_files |= fs
-            lines.append(md_table_row(
-                f"`{pred}`", f"`{code}`", f"`{wf}`", ind_str, str(len(all_files))
-            ))
-        lines.append("")
+        for sname in sorted(model_centric.keys()):
+            changes = model_centric[sname]
+            lines += [
+                f"### `{sname}`",
+                "",
+                md_table_row("Class code", "Current label", "Change to"),
+                md_table_row("---", "---", "---"),
+            ]
+            for c in sorted(changes, key=lambda x: (x["class_code"], x["current_label"])):
+                canonical = " or ".join(f"`{l}`" for l in sorted(c["canonical_labels"]))
+                lines.append(md_table_row(
+                    f"`{c['class_code']}`",
+                    f"`{c['current_label']}`",
+                    canonical,
+                ))
+            lines.append("")
 
     # -----------------------------------------------------------------------
     # Section 2: Predicate-scoped variants across individual models
