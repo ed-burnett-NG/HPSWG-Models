@@ -7,7 +7,7 @@ Document Note: Location Model Overview	tooltip	This model defines locations as C
 E31: Location Documents	tooltip	Documents or records describing or defining the location (e.g., floor plans, catalogues).	document-fs24|
 //links E31: Location Documents --> crm:E31
 E94: Geometry (Space Primitive)	tooltip	Geometric definition of the place (e.g., WKT/GeoJSON point, polygon, bbox).	name-fs24|
-//links E94: Geometry --> crm:E94
+//links E94: Geometry (Space Primitive) --> crm:E94
 //end sg1
 // Identification & description
 E53: Location	P48_has_preferred_identifier (1 to 1)	E42: Persistent Identifier (PID)	|url
