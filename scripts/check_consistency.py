@@ -159,9 +159,28 @@ def parse_tsv_file(path: Path) -> List[Triple]:
 # Discovery
 # ---------------------------------------------------------------------------
 
+def latest_tsv_in_folder(folder: Path) -> Optional[Path]:
+    """
+    Return the highest-versioned *_v*.tsv file in a folder, or None if absent.
+    Uses the same version-tuple logic as update_readmes.py.
+    """
+    versioned = []
+    for tsv in folder.glob("*_v*.tsv"):
+        v = parse_version(tsv.name)
+        if v is not None:
+            versioned.append((v, tsv))
+    if not versioned:
+        return None
+    versioned.sort(reverse=True, key=lambda vp: vp[0])
+    return versioned[0][1]
+
+
 def discover_model_files() -> List[ModelFile]:
     """
-    Find all versioned TSV files under models/, classifying workflow files separately.
+    Find the latest versioned TSV file in each model folder under models/.
+    Only the newest version of each model is included -- older versions are
+    not expected to be consistent and would generate noise.
+    Workflow files follow the same rule: only the latest version is included.
     """
     files: List[ModelFile] = []
     if not MODELS_DIR.exists():
@@ -173,9 +192,10 @@ def discover_model_files() -> List[ModelFile]:
         if child.name in EXCLUDED_FOLDERS:
             continue
         is_workflow = child.name == WORKFLOW_FOLDER
-        for tsv in sorted(child.glob("*_v*.tsv")):
+        latest = latest_tsv_in_folder(child)
+        if latest is not None:
             files.append(ModelFile(
-                path=tsv,
+                path=latest,
                 folder=child.name,
                 is_workflow=is_workflow,
             ))
