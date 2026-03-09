@@ -10,15 +10,15 @@ E39: Institution or Person#-1	tooltip	The institution or person currently respon
 E53: Institution or Place	tooltip	The physical location or site where the painting is housed or displayed.	place-fs24|
 //links E53: Institution or Place --> location
 E54: Dimensions	tooltip	The measured height, width, and optionally depth of the painting, recorded as dimensional attributes.	dims-fs24|
-//link E54: Dimensions --> crm:E54
+//links E54: Dimensions --> crm:E54
 E78: Collection (Curated Holding)	tooltip	The collection or sub-collection to which the painting formally belongs.	object-fs24|
-//link E78: Collection (Curated Holding) --> crm:E78
+//links E78: Collection (Curated Holding) --> crm:E78
 E31: Report or Document	tooltip	Any document, catalogue entry, publication, or report relating to the painting’s description, study, or conservation.	document-fs24|
-//link E31: Report or Document --> crm:E31
+//links E31: Report or Document --> crm:E31
 E57: Medium	tooltip	The material or binding medium used to form the paint layers of the artwork.	object-fs24|
-//link E57: Medium --> crm:E57
+//links E57: Medium --> crm:E57
 E57: Other Material	tooltip	Any material forming part of the original composition or manufacture of a heritage object or sample, beyond media or supports.	object-fs24|
-//link E57: Other Material --> crm:E57
+//links E57: Other Material --> crm:E57
 E22: Support	tooltip	The physical base material or structure on which the paint was applied (e.g., canvas, panel, metal).	object-fs24|
 //links E22: Support --> heritage_object_part
 E12: Production Event	tooltip	The creative or manufacturing event during which the painting was produced or completed.	event-fs24|
