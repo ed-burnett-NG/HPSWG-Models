@@ -4,7 +4,7 @@ E22: Heritage Object	has note	Document Note: Heritage Object Model Overview
 Document Note: Heritage Object Model Overview	tooltip	This model defines the Heritage Object (E22) as the core object from which samples, analytical data, and descriptive documentation are derived. It records ownership, collection context, dimensions, support, and medium, linking the artwork to its production event, associated documentation, and any related scientific or curatorial information. Together, these relationships provide a foundation for integrating technical study, provenance, and contextual research across connected datasets.
 //subgraph Linked Entities
 E39: Organisation or Person	tooltip	The legal owner or holding institution of the painting.	actor-fs24|
-//links E39: Organisation or Person --> person, organisation
+//links E39: Organisation or Person --> person, organisation [confirmed]
 E39: Organisation or Person#-1	tooltip	The institution or person currently responsible for the painting’s care or location.	actor-fs24|
 
 E53: Institution or Place	tooltip	The physical location or site where the painting is housed or displayed.	place-fs24|
