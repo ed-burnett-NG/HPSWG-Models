@@ -1,13 +1,16 @@
 # Model Consistency Report
 
-_Generated: 2026-03-17 12:08 UTC_
+_Generated: 2026-03-17 13:16 UTC_
 
 **Individual model files analysed:** 14  
 **Workflow/overview files analysed:** 1  
 
 This report checks consistency of inter-model linking nodes declared in each model's `//subgraph Linked Entities` block. Only declared linked entities are checked -- high-multiplicity classes such as E55 type terms are not flagged unless explicitly declared.
 
-## Link declaration syntax
+<details>
+<summary><strong>Link declaration syntax and status key</strong></summary>
+
+### Link declaration syntax
 
 Each linked entity in a model's `//subgraph Linked Entities` block should have a `//links` directive declaring what it connects to. Two target types are supported:
 
@@ -26,17 +29,27 @@ Each linked entity in a model's `//subgraph Linked Entities` block should have a
 
 Multiple targets are comma-separated or joined with `or`.
 
----
+**Confirming intentional hierarchy matches** -- where a linked entity uses a subclass or superclass of the target model's key entity and this is deliberate, add `[confirmed]` to suppress the 'confirm intent' flag:
+```
+//links E39: Group or Artist --> person, organisation [confirmed]
+```
 
-**Status key:**
-- ✅ Consistent -- repo model, class codes match exactly
-- 🔵 Hierarchy match -- repo model, related via CRM hierarchy, confirm intent
-- ⚠️ Class mismatch -- classes not related, check required
-- ❓ Unknown target -- declared target folder not found in repo
-- 📖 Ontology reference -- follows standard CRM/extension ontology structure
-- 📖🔵 Ontology via hierarchy -- related class, confirm intent
-- 📖⚠️ Ontology mismatch -- class code does not match reference
-- ⚠ No declaration -- `//links` directive missing, suggestions provided
+### Status key
+
+| Icon | Meaning |
+|------|---------|
+| ✅ | Consistent -- repo model, class codes match exactly |
+| ✅ | Consistent (confirmed hierarchy match) |
+| 🔵 | Hierarchy match -- repo model, related via CRM hierarchy, confirm intent |
+| ⚠️ | Class mismatch -- classes not related, check required |
+| ❓ | Unknown target -- declared target folder not found in repo |
+| 📖 | Ontology reference -- follows standard CRM/extension ontology structure |
+| 📖 | Ontology reference (confirmed hierarchy match) |
+| 📖🔵 | Ontology via hierarchy -- related class, confirm intent |
+| 📖⚠️ | Ontology mismatch -- class code does not match reference |
+| ⚠ | No declaration -- `//links` directive missing, suggestions provided |
+
+</details>
 
 ---
 
@@ -98,14 +111,14 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>production_event/production_event_v1.1.tsv</strong> -- 2 confirmed, 2 to review, 1 undeclared</summary>
+<summary><strong>production_event/production_event_v1.1.tsv</strong> -- 3 confirmed, 2 to review</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
 | `E22: Heritage Object` | `E22` | `heritage_object` → `E22: Heritage Object` | ✅ Consistent |
 | `E39: Group or Artist` | `E39` | `person` → `E21: Person` | 🔵 Hierarchy match -- confirm intent |
 |  |  | `organisation` → `E74: Organisation` | 🔵 Hierarchy match -- confirm intent |
-| `E53: Place of Production` | `E53` | _Suggested: `location` (`E53: Location`)_ | ⚠ No declaration |
+| `E53: Place of Production` | `E53` | `location` → `E53: Location` | ✅ Consistent |
 | `E31: Production Documents` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 
 </details>
