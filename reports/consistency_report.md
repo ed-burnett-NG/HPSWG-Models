@@ -1,6 +1,6 @@
 # Model Consistency Report
 
-_Generated: 2026-03-17 16:33 UTC_
+_Generated: 2026-03-17 16:37 UTC_
 
 **Individual model files analysed:** 14  
 **Workflow/overview files analysed:** 1  
@@ -152,19 +152,19 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>sample/sample_v1.7.tsv</strong> -- 7 confirmed, 3 undeclared</summary>
+<summary><strong>sample/sample_v1.7.tsv</strong> -- 9 confirmed, 3 undeclared</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
 | `S2: Sample Taking` | `S2` | `sample_taking_event` → `S2: Sample Taking` | ✅ Consistent |
 | `S24: Sample Splitting` | `S24` | `sample_splitting` | ❓ Target folder not found in repo |
 | `E53: Storage Location` | `E53` | `location` → `E53: Location` | ✅ Consistent |
-| `E22: Storage Unit` | `E22` | `storage_unit` | ❓ Target folder not found in repo |
+| `E22: Storage Unit` | `E22` | `sample_storage_unit` → `E22: Storage Unit` | ✅ Consistent |
 | `E39: Organisation or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
 |  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
 | `E53: Organisation or Address` | `E53` | `location` → `E53: Location` | ✅ Consistent |
 | `E31: Sample Documents` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
-| `E16: Measurement` | `E16` | `crm:E31` (ontology) | 📖⚠️ Ontology reference class mismatch -- check required |
+| `E16: Measurement` | `E16` | `crm:E16` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `S27: Observation` | `S27` | _No matching models found_ | ⚠ No declaration |
 | `E11: Sample Modification` | `E11` | `sample_modification` → `E11: Sample Modification` | ✅ Consistent |
 | `EX_Digital_Image: Main Sample Image` | `EX_Digital_Image` | _No matching models found_ | ⚠ No declaration |
