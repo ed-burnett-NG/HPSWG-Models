@@ -1,6 +1,6 @@
 # Model Consistency Report
 
-_Generated: 2026-03-18 16:52 UTC_
+_Generated: 2026-03-18 16:55 UTC_
 
 **Individual model files analysed:** 15  
 **Workflow/overview files analysed:** 1  
@@ -42,7 +42,7 @@ Multiple targets are comma-separated or joined with `or`.
 | ✅ | Consistent (confirmed hierarchy match) |
 | 🔵 | Hierarchy match -- repo model, related via CRM hierarchy, confirm intent |
 | ⚠️ | Class mismatch -- classes not related, check required |
-| ❓ | Unknown target -- declared target folder not found in repo |
+| ❓ | Missing target -- declared target folder not found in repo |
 | 📖 | Ontology reference -- follows standard CRM/extension ontology structure |
 | 📖 | Ontology reference (confirmed hierarchy match) |
 | 📖🔵 | Ontology via hierarchy -- related class, confirm intent |
@@ -78,7 +78,7 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>heritage_object_part/heritage_object_part_v1.1.tsv</strong> -- 5 confirmed</summary>
+<summary><strong>heritage_object_part/heritage_object_part_v1.1.tsv</strong> -- 5 confirmed, 1 mismatch</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
@@ -152,12 +152,12 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>sample/sample_v1.8.tsv</strong> -- 10 confirmed</summary>
+<summary><strong>sample/sample_v1.8.tsv</strong> -- 10 confirmed, 1 missing target</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
 | `S2: Sample Taking` | `S2` | `sample_taking_event` → `S2: Sample Taking` | ✅ Consistent |
-| `S24: Sample Splitting` | `S24` | `sample_splitting` | ❓ Target folder not found in repo |
+| `S24: Sample Splitting` | `S24` | `sample_splitting` | ❓ Missing target -- folder not found in repo |
 | `E39: Organisation or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
 |  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
 | `E53: Organisation or Address` | `E53` | `location` → `E53: Location` | ✅ Consistent |
@@ -247,7 +247,7 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>sampling_event/sampling_event_v1.1.tsv</strong> -- 7 confirmed</summary>
+<summary><strong>sampling_event/sampling_event_v1.1.tsv</strong> -- 7 confirmed, 1 missing target</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
@@ -256,7 +256,7 @@ Each model's linked entities are listed with their declared target models and co
 | `E39: Institution or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
 |  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
 | `E53: Sampling Location` | `E53` | `location` → `E53: Location` | ✅ Consistent |
-| `S2: Sample Taking` | `S2` | `sample_taking` | ❓ Target folder not found in repo |
+| `S2: Sample Taking` | `S2` | `sample_taking` | ❓ Missing target -- folder not found in repo |
 | `E22: Heritage Object` | `E22` | `heritage_object` → `E22: Heritage Object` | ✅ Consistent |
 | `E7: Project` | `E7` | `project` → `E7: Project` | ✅ Consistent |
 
