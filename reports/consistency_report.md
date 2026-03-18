@@ -1,6 +1,6 @@
 # Model Consistency Report
 
-_Generated: 2026-03-18 16:38 UTC_
+_Generated: 2026-03-18 16:49 UTC_
 
 **Individual model files analysed:** 15  
 **Workflow/overview files analysed:** 1  
@@ -218,24 +218,25 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>sample_storage_unit/sample_storage_unit_v1.0.tsv</strong> -- 4 undeclared</summary>
+<summary><strong>sample_storage_unit/sample_storage_unit_v1.1.tsv</strong> -- 5 confirmed</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
-| `E39: Storage Keeper` | `E39` | _No matching models found_ | ⚠ No declaration |
-| `E53: Storage Location (Place)` | `E53` | _Suggested: `location` (`E53: Location`)_ | ⚠ No declaration |
-| `E31: Storage Documents` | `E31` | _No matching models found_ | ⚠ No declaration |
-| `E29: Storage Method / Protocol` | `E29` | _No matching models found_ | ⚠ No declaration |
+| `E39: Storage Keeper` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
+|  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
+| `E53: Storage Location (Place)` | `E53` | `location` → `E53: Location` | ✅ Consistent |
+| `E31: Storage Documents` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E29: Storage Method / Protocol` | `E29` | `crm:E29` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 
 </details>
 
 <details>
-<summary><strong>sample_taking_event/sample_taking_event_v1.5.tsv</strong> -- 4 confirmed, 1 undeclared</summary>
+<summary><strong>sample_taking_event/sample_taking_event_v1.6.tsv</strong> -- 5 confirmed, 1 undeclared</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
 | `E22: Heritage Object` | `E22` | `heritage_object` → `E22: Heritage Object` | ✅ Consistent |
-| `S13: Sample` | `S13` | `sample` → `E22: Physical Sample` | ⚠️ Class mismatch -- check required |
+| `E22/S13: Heritage Sample` | `E22/S13` | `sample` → `E22: Physical Sample` | ✅ Consistent |
 | `E31: Report or Document` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `E29: Method or Procedure` | `E29` | `crm:E29` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `E39: Organisation or Person` | `E39` | `person. organisation` | ❓ Target folder not found in repo |
@@ -245,17 +246,18 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>sampling_event/sampling_event_v1.1.tsv</strong> -- 7 undeclared</summary>
+<summary><strong>sampling_event/sampling_event_v1.1.tsv</strong> -- 7 confirmed</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
-| `E31: Report or Document` | `E31` | _No matching models found_ | ⚠ No declaration |
-| `E29: Method or Procedure` | `E29` | _No matching models found_ | ⚠ No declaration |
-| `E39: Institution or Person` | `E39` | _No matching models found_ | ⚠ No declaration |
-| `E53: Sampling Location` | `E53` | _Suggested: `location` (`E53: Location`)_ | ⚠ No declaration |
-| `S2: Sample Taking` | `S2` | _Suggested: `sample_taking_event` (`S2: Sample Taking`)_ | ⚠ No declaration |
-| `E22: Heritage Object` | `E22` | _Suggested: `heritage_object` (`E22: Heritage Object`), `heritage_object_part` (`E22/S20: Heritage Object Part`), `sample` (`E22: Physical Sample`), `sample_storage_unit` (`E22: Storage Unit`)_ | ⚠ No declaration |
-| `E7: Project` | `E7` | _Suggested: `project` (`E7: Project`), `workflows` (`E7: Sampling Event`)_ | ⚠ No declaration |
+| `E31: Report or Document` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E29: Method or Procedure` | `E29` | `crm:E29` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E39: Institution or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
+|  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
+| `E53: Sampling Location` | `E53` | `location` → `E53: Location` | ✅ Consistent |
+| `S2: Sample Taking` | `S2` | `sample_taking` | ❓ Target folder not found in repo |
+| `E22: Heritage Object` | `E22` | `heritage_object` → `E22: Heritage Object` | ✅ Consistent |
+| `E7: Project` | `E7` | `project` → `E7: Project` | ✅ Consistent |
 
 </details>
 
