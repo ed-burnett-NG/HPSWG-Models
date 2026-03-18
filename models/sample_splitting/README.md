@@ -1,6 +1,6 @@
-# Heritage object image
+# Sample splitting
 
-![Status: Precursor](https://img.shields.io/badge/status-precursor-orange)
+![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen)
 
 This folder contains versioned model files for use with the [National Gallery Dynamic Modeller](https://research.nationalgallery.org.uk/lab/modelling/). Models are expressed as tab-separated triples aligned to CIDOC CRM and related extension ontologies.
 
@@ -15,13 +15,16 @@ See [`ONTOLOGIES.md`](../ONTOLOGIES.md) for full version details, source links, 
 | [CRMsci](https://cidoc-crm.org/crmsci/ModelVersion/crmsci-3.0) | 3.0 | `crmsci` |
 | [ResearchSpace](https://github.com/researchspace/researchspace) | _see notes_ | `rs` |
 
-## Precursor files
+## Model versions
 
-> **Status: Precursor** -- This model is in early development. The files below contain field mapping notes and draft content that will form the basis of the TSV model.
+<details>
+<summary><strong>Sample splitting</strong>: latest version <a href="https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/sample_splitting/sample_splitting_v0.1.tsv">v0.1</a></summary>
 
-| File | Raw link |
-|------|----------|
-| `heritage_object_image_precursor_v1.0.txt` | [View raw](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/heritage_object_image/heritage_object_image_precursor_v1.0.txt) |
+| | Version | Created | Last modified | Open in Modeller |
+| :---: | :---: | :---: | :---: | --- |
+| :heavy_check_mark: | v0.1 | 2026-03-18 | 2026-03-18 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/sample_splitting/sample_splitting_v0.1.tsv) |
+
+</details>
 
 ## Contributing
 

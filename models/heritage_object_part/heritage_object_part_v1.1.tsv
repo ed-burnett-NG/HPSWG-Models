@@ -20,9 +20,15 @@ E54: Dimensions	tooltip	The measured dimensions of this part, where recorded sep
 //links E54: Dimensions --> crm:E54
 E12: Production Event	tooltip	The production event by which this part was made, recorded only where the part was made separately from the parent object -- for example a frame or lining canvas.	event-fs24|
 //links E12: Production Event --> production_event
-S13: Material Sample	tooltip	A material sample taken from this part, connecting the part to scientific examination and analysis data.	object-fs24|
-//links S13: Material Sample --> sample
+
+//subgraph E22/S13: Heritage Sample
+E22: Physical Sample	tooltip	A curated physical artefact that contains or carries the sampled matter (S13). Serves as the object-management layer: it holds identifiers, condition records, custody, storage, and images. P46 is used as a pragmatic contains/carries proxy for collection management purposes.	object_bn-fs24|
+S13: Material Sample	tooltip	The removed matter treated as an amount of matter (CRMsci S13) whose identity is grounded in material continuity and representativity. Serves as the scientific layer: it is the subject of measurement, observation, modification, and splitting events.	object_bn-fs24|
+//end sg2-10-10
+//links E22/S13: Heritage Sample --> sample
+
 //end sg1
+
 E22/S20: Heritage Object Part	P1_is_identified_by (1 to 1)	E41: Unique System Label or ID	|name
 E41: Unique System Label or ID	tooltip	Required within some documentation or database systems, such as ResearchSpace required label.
 E22/S20: Heritage Object Part	P48_has_preferred_identifier (0 to 1)	E42: Persistent Identifier (PID)	|url
@@ -41,5 +47,9 @@ E22/S20: Heritage Object Part	P70i_is_documented_in (0 to n)	E31: Report or Docu
 E22/S20: Heritage Object Part	P45_consists_of (0 to n)	E57: Material	|object
 E22/S20: Heritage Object Part	P43_has_dimension (0 to n)	E54: Dimensions	|dims
 E22/S20: Heritage Object Part	P108i_was_produced_by (0 to 1)	E12: Production Event	|event
-E22/S20: Heritage Object Part	P46i_forms_part_of (0 to 1)	S13: Material Sample	|object
-S13: Material Sample	tooltip	A sample is modelled as a specific type of part. Where sample metadata is required use the dedicated Sample model.
+E22/S20: Heritage Object Part	P46i_forms_part_of (0 to 1)	E22/S13: Heritage Sample	|object
+E22/S13: Heritage Sample	has note	A sample is modelled as a specific type of part. Where sample metadata is required use the dedicated Sample model.
+
+// Dual-layer internal connection
+E22: Physical Sample	P46_is_composed_of (1 to n)	S13: Material Sample	|object
+S13: Material Sample	P46i_forms_part_of (1 to 1)	E22: Physical Sample

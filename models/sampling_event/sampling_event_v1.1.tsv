@@ -2,15 +2,25 @@
 E7: Sampling Event	tooltip	The overall sampling session or campaign event in which one or more individual sample extractions were carried out.	event-fs32
 E7: Sampling Event	has note	Document Note: Sampling Event Model Overview
 Document Note: Sampling Event Model Overview	tooltip	This model defines a broader Sampling Event (E7) at the Object level, that groups shared metadata (who, when, where, why, and documentation) for one or more individual sample extraction activities. Each extraction is represented as a nested S2: Sample Taking event linked from the Sampling Event. This allows shared context to be captured once, while extraction-specific links (sample site, removed sample, and observation) are recorded per individual Sample Taking event.
+
 //subgraph Linked Entities
 E31: Report or Document	tooltip	A textual or digital document recording information related to the sampling process, results, or reasoning.	document-fs24|
+//links E31: Report or Document --> crm:E31
 E29: Method or Procedure	tooltip	A defined sampling protocol or procedure that may be referenced for standard approaches.	document-fs24|
+//links E29: Method or Procedure --> crm:E29
 E39: Institution or Person	tooltip	The actor (individual or organisation) responsible for carrying out or authorising the sampling activity.	actor-fs24|
+//links E39: Institution or Person --> person, organisation [confirmed]
 E53: Sampling Location	tooltip	The physical place where the sampling activity occurred, typically within an institution or laboratory.	place-fs24|
+//links E53: Sampling Location --> location
 S2: Sample Taking	tooltip	The individual event of taking a sample.	event-fs24|
+//links S2: Sample Taking --> sample_taking_event
 E22: Heritage Object	tooltip	A human-made work of art that forms the physical source object from which the sample is taken.	object-fs24|
+//links E22: Heritage Object --> heritage_object
 E7: Project	tooltip	The individual event of taking a sample.	event2-fs24|
+//links E7: Project --> project
 //end sg1
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // SAMPLING EVENT (shared metadata captured once at the object level)
 ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -49,6 +49,8 @@ WORKFLOW_FOLDERS = {"workflows"}
 VERSION_RE = re.compile(r"_v(\d+(?:\.\d+)*)\.tsv$")
 SKIP_RE = re.compile(r"^\s*//")
 SUBGRAPH_START_RE = re.compile(r"^\s*//subgraph\s+Linked Entities", re.IGNORECASE)
+SUBGRAPH_ANY_START_RE = re.compile(r"^\s*//subgraph\b", re.IGNORECASE)
+SUBGRAPH_NAME_RE = re.compile(r"^\s*//subgraph\s+(.+)", re.IGNORECASE)
 SUBGRAPH_END_RE = re.compile(r"^\s*//end", re.IGNORECASE)
 LINKS_RE = re.compile(
     r"^\s*//links\s+(.+?)\s*-->\s*(.+?)\s*(\[confirmed\])?\s*$", re.IGNORECASE
@@ -226,28 +228,61 @@ def parse_model_file(mf: ModelFile) -> ModelAnalysis:
         print(f"Warning: could not read {mf.path}: {e}", file=sys.stderr)
         return ma
 
-    in_linked_block = False
+    # Depth-tracked subgraph state.
+    # linked_depth > 0 means we are inside the Linked Entities block (at any nesting level).
+    # nested_depth > 0 means we are inside a subgraph nested *within* the Linked Entities block.
+    # Nodes and //links declared at nested_depth > 0 are treated as internal display nodes
+    # and are excluded from independent consistency checking.  The subgraph name itself
+    # (extracted from the //subgraph line) is registered as the linked entity instead.
+    linked_depth: int = 0
+    nested_depth: int = 0
     # Track linked entities by name for //links association
     linked_by_name: Dict[str, LinkedEntity] = {}
+    # Names of nodes that are internal to a nested subgraph -- excluded from checking
+    internal_nodes: Set[str] = set()
 
     for line in lines:
-        # Detect subgraph start
+        # Detect the Linked Entities subgraph opening
         if SUBGRAPH_START_RE.match(line):
-            in_linked_block = True
+            linked_depth = 1
             ma.has_linked_block = True
             continue
 
-        # Detect subgraph end
-        if SUBGRAPH_END_RE.match(line) and in_linked_block:
-            in_linked_block = False
+        # Detect any other subgraph opening while inside the Linked Entities block
+        if linked_depth > 0 and not SUBGRAPH_START_RE.match(line) and SUBGRAPH_ANY_START_RE.match(line):
+            nested_depth += 1
+            # Register the subgraph name itself as a linked entity (the proxy node)
+            name_match = SUBGRAPH_NAME_RE.match(line)
+            if name_match:
+                sg_name = name_match.group(1).strip()
+                # Strip any suffix after whitespace (e.g. "E22/S13: Heritage Sample" from
+                # "//subgraph E22/S13: Heritage Sample")
+                canonical_sg = strip_instance_suffix(sg_name)
+                if canonical_sg not in linked_by_name and extract_class_code(canonical_sg):
+                    linked_by_name[canonical_sg] = LinkedEntity(canonical_sg)
             continue
 
-        # Parse //links directives (inside or just after the block)
+        # Detect subgraph end
+        if SUBGRAPH_END_RE.match(line):
+            if linked_depth > 0:
+                if nested_depth > 0:
+                    nested_depth -= 1
+                else:
+                    linked_depth = 0
+            continue
+
+        # Parse //links directives (inside or just after the Linked Entities block,
+        # but NOT when inside a nested subgraph -- those links are internal)
         links_match = LINKS_RE.match(line)
         if links_match:
             node_name = strip_instance_suffix(links_match.group(1).strip())
             targets = parse_targets(links_match.group(2))
             confirmed = bool(links_match.group(3))
+            # If we are inside a nested subgraph, this //links refers to an internal
+            # node -- mark it as internal and do not register as an independent entity
+            if nested_depth > 0:
+                internal_nodes.add(node_name)
+                continue
             # Match against known linked entities
             if node_name in linked_by_name:
                 linked_by_name[node_name].declared_targets = targets
@@ -277,7 +312,7 @@ def parse_model_file(mf: ModelFile) -> ModelAnalysis:
         # Outside the block, skip tooltip/metadata lines as usual.
         if pred in ("has note", "from list"):
             continue
-        if pred == "tooltip" and not in_linked_block:
+        if pred == "tooltip" and linked_depth == 0:
             continue
 
         canonical = strip_instance_suffix(subj_raw)
@@ -285,19 +320,22 @@ def parse_model_file(mf: ModelFile) -> ModelAnalysis:
         if code is None:
             continue
 
-        # Key entity: first subject with a class code seen outside the block
-        # (never a tooltip line, since those are skipped outside the block)
-        if ma.key_entity is None and not in_linked_block:
+        # Key entity: first subject with a class code seen outside the Linked Entities block
+        if ma.key_entity is None and linked_depth == 0:
             ma.key_entity = canonical
             ma.key_class_code = code
 
-        # Linked entities: subjects inside the block (including tooltip declarations)
-        if in_linked_block and canonical not in linked_by_name:
+        # Linked entities: subjects inside the Linked Entities block but NOT inside
+        # a nested subgraph (those are internal display nodes, not inter-model joins)
+        if linked_depth > 0 and nested_depth == 0 and canonical not in linked_by_name:
             le = LinkedEntity(canonical)
             linked_by_name[canonical] = le
 
-    # Finalise linked entities list (preserve declaration order)
-    ma.linked_entities = list(linked_by_name.values())
+    # Exclude any nodes marked as internal from the final linked entities list
+    ma.linked_entities = [
+        le for le in linked_by_name.values()
+        if le.full_name not in internal_nodes
+    ]
     return ma
 
 
@@ -453,7 +491,7 @@ STATUS_NOTES = {
     "confirmed_hierarchy":         "Consistent (confirmed hierarchy match)",
     "hierarchy_match":             "Hierarchy match -- confirm intent",
     "class_mismatch":              "Class mismatch -- check required",
-    "unknown_target":              "Target folder not found in repo",
+    "unknown_target":              "Missing target -- folder not found in repo",
     "ontology_ref":                "Ontology reference -- follows standard CRM structure",
     "confirmed_ontology_hierarchy":"Ontology reference (confirmed hierarchy match)",
     "ontology_hierarchy":          "Ontology reference via hierarchy -- confirm intent",
@@ -463,6 +501,10 @@ STATUS_NOTES = {
 # Statuses that count as positive for the accordion summary
 POSITIVE_STATUSES = {"consistent", "ontology_ref", "confirmed_hierarchy", "confirmed_ontology_hierarchy"}
 PARTIAL_STATUSES = {"hierarchy_match", "ontology_hierarchy"}
+# Statuses that indicate a problem requiring attention
+NEEDS_REVIEW_STATUSES = {"class_mismatch", "ontology_mismatch"}
+# Statuses that indicate a declared target that cannot be resolved at all
+MISSING_STATUSES = {"unknown_target"}
 
 
 def md_row(*cells: str) -> str:
@@ -529,7 +571,7 @@ def generate_report(result: Dict, files: List[ModelFile]) -> str:
         "| ✅ | Consistent (confirmed hierarchy match) |",
         "| 🔵 | Hierarchy match -- repo model, related via CRM hierarchy, confirm intent |",
         "| ⚠️ | Class mismatch -- classes not related, check required |",
-        "| ❓ | Unknown target -- declared target folder not found in repo |",
+        "| ❓ | Missing target -- declared target folder not found in repo |",
         "| 📖 | Ontology reference -- follows standard CRM/extension ontology structure |",
         "| 📖 | Ontology reference (confirmed hierarchy match) |",
         "| 📖🔵 | Ontology via hierarchy -- related class, confirm intent |",
@@ -573,6 +615,12 @@ def generate_report(result: Dict, files: List[ModelFile]) -> str:
             partial = sum(
                 1 for tc in all_checks if tc["status"] in PARTIAL_STATUSES
             )
+            needs_review = sum(
+                1 for tc in all_checks if tc["status"] in NEEDS_REVIEW_STATUSES
+            )
+            missing = sum(
+                1 for tc in all_checks if tc["status"] in MISSING_STATUSES
+            )
             undeclared = total_count - declared_count
 
             if all_checks:
@@ -581,6 +629,10 @@ def generate_report(result: Dict, files: List[ModelFile]) -> str:
                     summary_parts.append(f"{positive} confirmed")
                 if partial:
                     summary_parts.append(f"{partial} to review")
+                if needs_review:
+                    summary_parts.append(f"{needs_review} mismatch")
+                if missing:
+                    summary_parts.append(f"{missing} missing target")
                 if undeclared:
                     summary_parts.append(f"{undeclared} undeclared")
                 summary_str = f" -- {', '.join(summary_parts)}" if summary_parts else ""
