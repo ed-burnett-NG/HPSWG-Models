@@ -13,7 +13,7 @@ E39: Institution or Person	tooltip	The actor (individual or organisation) respon
 E53: Sampling Location	tooltip	The physical place where the sampling activity occurred, typically within an institution or laboratory.	place-fs24|
 //links E53: Sampling Location --> location
 S2: Sample Taking	tooltip	The individual event of taking a sample.	event-fs24|
-//links S2: Sample Taking --> sample_taking
+//links S2: Sample Taking --> sample_taking_event
 E22: Heritage Object	tooltip	A human-made work of art that forms the physical source object from which the sample is taken.	object-fs24|
 //links E22: Heritage Object --> heritage_object
 E7: Project	tooltip	The individual event of taking a sample.	event2-fs24|

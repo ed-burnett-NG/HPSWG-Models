@@ -22,7 +22,7 @@ E31: Sample Documents	tooltip	Any document, note, report, or publication describ
 E16: Measurement	tooltip	An event in which one or more quantitative properties of the sample were measured.	event-fs24|
 //links E16: Measurement --> crm:E16
 S27: Observation	tooltip	An event in which qualitative or visual properties of the sample were examined.	event-fs24|
-//links S27: Observation --> crmsci:S27
+//links S27: Observation --> sample_observation
 E11: Sample Modification	tooltip	An event that altered the sample after its initial removal, such as preparation, embedding, or coating.	event-fs24|
 //links E11: Sample Modification --> sample_modification
 EX_Digital_Image: Main Sample Image	tooltip	The primary representative image of the curated physical sample.	digital2-fs24|
