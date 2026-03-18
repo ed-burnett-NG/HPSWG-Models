@@ -491,7 +491,7 @@ STATUS_NOTES = {
     "confirmed_hierarchy":         "Consistent (confirmed hierarchy match)",
     "hierarchy_match":             "Hierarchy match -- confirm intent",
     "class_mismatch":              "Class mismatch -- check required",
-    "unknown_target":              "Target folder not found in repo",
+    "unknown_target":              "Missing target -- folder not found in repo",
     "ontology_ref":                "Ontology reference -- follows standard CRM structure",
     "confirmed_ontology_hierarchy":"Ontology reference (confirmed hierarchy match)",
     "ontology_hierarchy":          "Ontology reference via hierarchy -- confirm intent",
@@ -501,6 +501,10 @@ STATUS_NOTES = {
 # Statuses that count as positive for the accordion summary
 POSITIVE_STATUSES = {"consistent", "ontology_ref", "confirmed_hierarchy", "confirmed_ontology_hierarchy"}
 PARTIAL_STATUSES = {"hierarchy_match", "ontology_hierarchy"}
+# Statuses that indicate a problem requiring attention
+NEEDS_REVIEW_STATUSES = {"class_mismatch", "ontology_mismatch"}
+# Statuses that indicate a declared target that cannot be resolved at all
+MISSING_STATUSES = {"unknown_target"}
 
 
 def md_row(*cells: str) -> str:
@@ -567,7 +571,7 @@ def generate_report(result: Dict, files: List[ModelFile]) -> str:
         "| ✅ | Consistent (confirmed hierarchy match) |",
         "| 🔵 | Hierarchy match -- repo model, related via CRM hierarchy, confirm intent |",
         "| ⚠️ | Class mismatch -- classes not related, check required |",
-        "| ❓ | Unknown target -- declared target folder not found in repo |",
+        "| ❓ | Missing target -- declared target folder not found in repo |",
         "| 📖 | Ontology reference -- follows standard CRM/extension ontology structure |",
         "| 📖 | Ontology reference (confirmed hierarchy match) |",
         "| 📖🔵 | Ontology via hierarchy -- related class, confirm intent |",
@@ -611,6 +615,12 @@ def generate_report(result: Dict, files: List[ModelFile]) -> str:
             partial = sum(
                 1 for tc in all_checks if tc["status"] in PARTIAL_STATUSES
             )
+            needs_review = sum(
+                1 for tc in all_checks if tc["status"] in NEEDS_REVIEW_STATUSES
+            )
+            missing = sum(
+                1 for tc in all_checks if tc["status"] in MISSING_STATUSES
+            )
             undeclared = total_count - declared_count
 
             if all_checks:
@@ -619,6 +629,10 @@ def generate_report(result: Dict, files: List[ModelFile]) -> str:
                     summary_parts.append(f"{positive} confirmed")
                 if partial:
                     summary_parts.append(f"{partial} to review")
+                if needs_review:
+                    summary_parts.append(f"{needs_review} mismatch")
+                if missing:
+                    summary_parts.append(f"{missing} missing target")
                 if undeclared:
                     summary_parts.append(f"{undeclared} undeclared")
                 summary_str = f" -- {', '.join(summary_parts)}" if summary_parts else ""
