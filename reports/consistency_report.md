@@ -1,8 +1,8 @@
 # Model Consistency Report
 
-_Generated: 2026-03-18 13:58 UTC_
+_Generated: 2026-03-18 14:50 UTC_
 
-**Individual model files analysed:** 14  
+**Individual model files analysed:** 15  
 **Workflow/overview files analysed:** 1  
 
 This report checks consistency of inter-model linking nodes declared in each model's `//subgraph Linked Entities` block. Only declared linked entities are checked -- high-multiplicity classes such as E55 type terms are not flagged unless explicitly declared.
@@ -102,6 +102,23 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
+<summary><strong>observation/observation_v0.1.tsv</strong> -- 7 confirmed, 2 undeclared</summary>
+
+| Linked entity | Class code | Declared target(s) | Status |
+| --- | --- | --- | --- |
+| `E22: Physical Sample` | `E22` | _Suggested: `heritage_object` (`E22: Heritage Object`), `heritage_object_part` (`E22/S20: Heritage Object Part`), `sample` (`E22: Physical Sample`), `sample_storage_unit` (`E22: Storage Unit`)_ | ⚠ No declaration |
+| `S13: Material Sample` | `S13` | _No matching models found_ | ⚠ No declaration |
+| `E22/S13: Heritage Sample` | `E22/S13` | `sample` → `E22: Physical Sample` | ✅ Consistent |
+| `E39: Institution or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
+|  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
+| `E53: Place of Observation` | `E53` | `location` → `E53: Location` | ✅ Consistent |
+| `E31: Report or Document` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E29: Method / Protocol` | `E29` | `crm:E29` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E70: Instrument / Equipment` | `E70` | `crm:E70` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+
+</details>
+
+<details>
 <summary><strong>organisation/organisation_v1.0.tsv</strong> -- 4 confirmed</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
@@ -173,17 +190,21 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>sample_modification/sample_modification_v1.3.tsv</strong> -- 7 undeclared</summary>
+<summary><strong>sample_modification/sample_modification_v1.4.tsv</strong> -- 9 confirmed, 1 undeclared</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
-| `S13: Sample` | `S13` | _No matching models found_ | ⚠ No declaration |
-| `E39: Institution or Person` | `E39` | _No matching models found_ | ⚠ No declaration |
-| `E53: Place of Modification` | `E53` | _Suggested: `location` (`E53: Location`)_ | ⚠ No declaration |
-| `E31: Report or Document` | `E31` | _No matching models found_ | ⚠ No declaration |
-| `E29: Method / Protocol` | `E29` | _No matching models found_ | ⚠ No declaration |
-| `E57: Material Used` | `E57` | _No matching models found_ | ⚠ No declaration |
-| `E70: Tool / Equipment` | `E70` | _No matching models found_ | ⚠ No declaration |
+| `E22: Physical Sample` | `E22` | _Suggested: `heritage_object` (`E22: Heritage Object`), `heritage_object_part` (`E22/S20: Heritage Object Part`), `sample` (`E22: Physical Sample`), `sample_storage_unit` (`E22: Storage Unit`)_ | ⚠ No declaration |
+| `E22: Heritage Sample` | `E22` | `sample` → `E22: Physical Sample` | ✅ Consistent |
+| `S13: Material Sample` | `S13` | `sample` → `E22: Physical Sample` | ⚠️ Class mismatch -- check required |
+| `E22/S13: Heritage Sample` | `E22/S13` | `sample` → `E22: Physical Sample` | ✅ Consistent |
+| `E39: Institution or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
+|  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
+| `E53: Place of Modification` | `E53` | `location` → `E53: Location` | ✅ Consistent |
+| `E31: Report or Document` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E29: Method / Protocol` | `E29` | `crm:E29` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E57: Material Used` | `E57` | `crm:E57` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E70: Tool / Equipment` | `E70` | `crm:E70` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 
 </details>
 
