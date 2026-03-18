@@ -1,6 +1,6 @@
 # Model Consistency Report
 
-_Generated: 2026-03-18 16:14 UTC_
+_Generated: 2026-03-18 16:17 UTC_
 
 **Individual model files analysed:** 15  
 **Workflow/overview files analysed:** 1  
@@ -102,12 +102,13 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>observation/observation_v0.1.tsv</strong> -- 7 confirmed, 2 undeclared</summary>
+<summary><strong>observation/observation_v0.1.tsv</strong> -- 8 confirmed, 1 undeclared</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
 | `E22: Physical Sample` | `E22` | _Suggested: `heritage_object` (`E22: Heritage Object`), `heritage_object_part` (`E22/S20: Heritage Object Part`), `sample` (`E22: Physical Sample`), `sample_storage_unit` (`E22: Storage Unit`)_ | ⚠ No declaration |
-| `S13: Material Sample` | `S13` | _No matching models found_ | ⚠ No declaration |
+| `E22: Heritage Sample` | `E22` | `sample` → `E22: Physical Sample` | ✅ Consistent |
+| `S13: Material Sample` | `S13` | `sample` → `E22: Physical Sample` | ⚠️ Class mismatch -- check required |
 | `E22/S13: Heritage Sample` | `E22/S13` | `sample` → `E22: Physical Sample` | ✅ Consistent |
 | `E39: Institution or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
 |  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
