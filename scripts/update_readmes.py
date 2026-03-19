@@ -815,6 +815,115 @@ def parse_and_resolve_fields(tsv_path: Path) -> List[FieldRecord]:
     return records
 
 
+def identify_primary_node(tsv_lines: List[List[str]]) -> Tuple[str, str]:
+    """
+    Identify the primary node and Document Note node from TSV lines.
+    Returns (primary_node_label, doc_note_node_label).
+    doc_note_node_label is empty string if not found.
+
+    Fallback chain:
+      1. Subject of the line where predicate is 'has note' and object starts
+         with 'Document Note:'
+      2. Subject of the first line whose format column contains '-fs32'
+      3. Most frequent subject across all non-directive structural lines
+      4. Empty string with a warning printed
+    """
+    primary = ""
+    doc_note = ""
+
+    # Step 1: has note + Document Note
+    for parts in tsv_lines:
+        if len(parts) < 3:
+            continue
+        if parts[1].strip() == "has note" and parts[2].strip().startswith("Document Note:"):
+            primary = parts[0].strip()
+            doc_note = parts[2].strip()
+            return primary, doc_note
+
+    # Step 2: -fs32 format class
+    for parts in tsv_lines:
+        if len(parts) < 4:
+            continue
+        fmt = parts[3].strip() if len(parts) > 3 else ""
+        if "-fs32" in fmt:
+            primary = parts[0].strip()
+            return primary, doc_note
+
+    # Step 3: most frequent subject in structural lines
+    from collections import Counter
+    subject_counts: Counter = Counter()
+    for parts in tsv_lines:
+        raw = "\t".join(parts)
+        if raw.startswith("//"):
+            continue
+        if len(parts) < 2:
+            continue
+        pred = parts[1].strip()
+        if pred in ("tooltip", "has note", "from list"):
+            continue
+        subject_counts[parts[0].strip()] += 1
+
+    if subject_counts:
+        primary = subject_counts.most_common(1)[0][0]
+        return primary, doc_note
+
+    # Step 4: fallback
+    print("  WARNING: Primary node could not be automatically identified in this model.")
+    return "", ""
+
+
+def generate_field_section_header(
+    mf: "ModelFolder",
+    raw_base: str,
+    tsv_lines: List[List[str]],
+) -> str:
+    """
+    Generate the header block for a field table section:
+      - Links line (folder, raw TSV, open in modeller)
+      - Document Note tooltip paragraph
+      - Primary node tooltip in italics (if different or always shown)
+
+    Returns a markdown string. Falls back gracefully if tooltips are missing.
+    """
+    title = model_title_from_folder(mf.folder_name)
+    lines: List[str] = []
+
+    # Links line
+    if mf.latest_tsv and raw_base:
+        folder_rel = f"models/{mf.folder_name}"
+        folder_link = f"[`{folder_rel}`](../{folder_rel}/)"
+        tsv_link = f"[v{mf.latest_version_str}]({raw_url(raw_base, mf.latest_tsv)})"
+        open_link = f"[Open in Modeller]({modeller_url(raw_base, mf.latest_tsv)})"
+        lines.append(f"{folder_link} | {tsv_link} | {open_link}\n")
+    else:
+        lines.append(f"_{title}_\n")
+
+    # Identify primary node and doc note node
+    primary_node, doc_note_node = identify_primary_node(tsv_lines)
+
+    # Document Note tooltip (shown first, as the fuller descriptive text)
+    if doc_note_node:
+        doc_note_tooltip = _find_tooltip(doc_note_node, tsv_lines)
+        if doc_note_tooltip:
+            cleaned = _strip_alt_labels(doc_note_tooltip)
+            lines.append(f"{cleaned}\n")
+
+    # Primary node tooltip (shown in italics below)
+    if primary_node:
+        primary_tooltip = _find_tooltip(primary_node, tsv_lines)
+        if primary_tooltip:
+            cleaned = _strip_alt_labels(primary_tooltip)
+            lines.append(f"_{cleaned}_\n")
+
+    # If neither tooltip was found, add a warning note
+    if not doc_note_node and not primary_node:
+        lines.append(
+            "_Model description not available -- primary node could not be identified._\n"
+        )
+
+    return "\n".join(lines)
+
+
 def generate_field_table_block(tsv_path: Path) -> str:
     """
     Generate a markdown field reference table from //field directives in a TSV.
@@ -866,7 +975,7 @@ def _forms_listing_block(models_with_fields: List[str]) -> str:
     return "\n".join(lines)
 
 
-def write_forms_outputs(folders: Dict[str, ModelFolder]):
+def write_forms_outputs(folders: Dict[str, ModelFolder], raw_base: str):
     """
     Generate forms/field-tables.md (aggregated field tables for all models
     that have //field directives) and forms/README.md.
@@ -884,10 +993,13 @@ def write_forms_outputs(folders: Dict[str, ModelFolder]):
         block = generate_field_table_block(mf.latest_tsv)
         if not block:
             continue
+        tsv_lines = _load_tsv_lines(mf.latest_tsv)
+        header = generate_field_section_header(mf, raw_base, tsv_lines)
         models_with_fields.append(name)
         title = model_title_from_folder(name)
         sections += [
             f"### {title}\n",
+            header,
             block,
             "",
         ]
@@ -1054,12 +1166,15 @@ def write_per_model_readmes(
         if mf.latest_tsv:
             field_block = generate_field_table_block(mf.latest_tsv)
             if field_block:
+                tsv_lines = _load_tsv_lines(mf.latest_tsv)
+                field_header = generate_field_section_header(mf, raw_base, tsv_lines)
                 lines += [
                     "## Field reference\n",
                     "This table lists the fields defined for data entry or display, "
                     "derived from `//field` and `//field-via` directives in the model. "
                     "See the [forms folder](../../forms/field-tables.md) for the "
                     "aggregated cross-model view.\n",
+                    field_header,
                     field_block,
                     "",
                 ]
@@ -1183,7 +1298,7 @@ def main():
     write_models_readme(folders, raw_base, ng_tsvs, ontologies)
     write_per_model_readmes(folders, raw_base, ontologies)
     write_reports_readme(raw_base)
-    write_forms_outputs(folders)
+    write_forms_outputs(folders, raw_base)
 
     # Write ONTOLOGIES.md if it does not exist yet (first-run bootstrap)
     ontologies_md_path = REPO_ROOT / "ONTOLOGIES.md"
