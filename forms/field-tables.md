@@ -6,6 +6,12 @@ Each section below corresponds to a model that contains `//field` or `//field-vi
 
 ### Project
 
+[`models/project`](../models/project/) | [v1.2](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/project/project_v1.2.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/project/project_v1.2.tsv)
+
+This model defines a Project (E7) as a high-level activity used to group and manage related work (e.g., sampling campaigns, research initiatives, surveys). It brings together identifiers, title, ownership and participation, a short descriptive summary, dates/time-span, related documentation, and simple status/type flags. Projects may optionally sit within a broader parent project or programme.
+
+_An organised activity or campaign with a defined purpose, scope, ownership, and timeframe. In practice this may represent a research project, survey, or documentation campaign._
+
 | Required | Human understandable Label | Alternative Labels | CRM Code | Label Description |
 |----------|---------------------------|-------------------|----------|-------------------|
 | Optional | Persistent Identifier (PID) | Project ID; PID | E42 | Optional public unique identifier for the project. |
