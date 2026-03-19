@@ -28,6 +28,24 @@ See [`ONTOLOGIES.md`](../ONTOLOGIES.md) for full version details, source links, 
 
 </details>
 
+## Field reference
+
+This table lists the fields defined for data entry or display, derived from `//field` and `//field-via` directives in the model. See the [forms folder](../../forms/field-tables.md) for the aggregated cross-model view.
+
+| Required | Human understandable Label | Alternative Labels | CRM Code | Label Description |
+|----------|---------------------------|-------------------|----------|-------------------|
+| Optional | Persistent Identifier (PID) | Project ID; PID | E42 | Optional public unique identifier for the project. |
+| ✓ | Unique System Label or ID | Database or System ID/Label | E41 | Required within some documentation or database systems, such as ResearchSpace required label. |
+| ✓ | Project Title | Name | E35 | Human-readable title for the project or campaign. |
+| ✓ | Project Owner | Responsible Institution or Person | E39 | The primary organisation or individual responsible for the project. |
+| Optional | Other Actors | Contributors; Collaborators | E39 | Other individuals or organisations involved in the project. |
+| ✓ | Project Description | Summary; Scope | E73 | Short description outlining the purpose and scope of the project. |
+| ✓ | Project Dates | Start Date; End Date | E52 | The timeframe during which the project was active. |
+| Optional | Related Documents | Reports; Publications; Proposals | E31 | Documents associated with the project. |
+| Optional | Parent Project | Programme; Umbrella Project | E7 | A broader project or programme within which this project is situated. Note: sometimes treated as E89 Propositional Object in other mappings, but can be implemented as E7 Activity in ResearchSpace. (Could be mapped as E89 Propositional Object but ResearchSpace implements it as E7 Activity.) |
+| ✓ | Project Type | Campaign; Research Project; Survey | E55 | A simple classification describing the nature of the project. |
+| ✓ | condition state type | Planned; Ongoing; Completed; Legacy | E55 | Indicates the current state or completion level of the project. |
+
 ## Contributing
 
 If you would like to contribute to this model, please refer to the [repository contributing guidelines](../../CONTRIBUTING.md) and the [ontology reference](../../ONTOLOGIES.md). The TSV triple format is documented in the [Dynamic Modeller](https://research.nationalgallery.org.uk/lab/modelling/) interface.
