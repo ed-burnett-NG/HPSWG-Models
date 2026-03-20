@@ -41,17 +41,17 @@ _An organised activity or campaign with a defined purpose, scope, ownership, and
 
 | Required | Human understandable Label | Alternative Labels | CRM Code | Behaviour | Label Description |
 |----------|---------------------------|-------------------|----------|-----------|-------------------|
-| Optional | Persistent Identifier (PID) | Project ID; PID | E42 | ![behaviour: External ID](https://img.shields.io/badge/behaviour-External ID-0e7490) | Optional public unique identifier for the project. |
-| ✓ | Unique System Label or ID | Database or System ID/Label | E41 | ![behaviour: System ID](https://img.shields.io/badge/behaviour-System ID-57606a) | Required within some documentation or database systems, such as ResearchSpace required label. |
-| ✓ | Project Title | Name | E35 | ![behaviour: Free Text](https://img.shields.io/badge/behaviour-Free Text-0969da) | Human-readable title for the project or campaign. |
-| ✓ | Project Owner | Responsible Institution or Person | E39 | ![behaviour: Select Entity](https://img.shields.io/badge/behaviour-Select Entity-8250df) | The primary organisation or individual responsible for the project. |
-| Optional | Other Actors | Contributors; Collaborators | E39 | ![behaviour: Select Entity](https://img.shields.io/badge/behaviour-Select Entity-8250df) | Other individuals or organisations involved in the project. |
-| ✓ | Project Description | Summary; Scope | E73 | ![behaviour: Free Text](https://img.shields.io/badge/behaviour-Free Text-0969da) | Short description outlining the purpose and scope of the project. |
-| ✓ | Project Dates | Start Date; End Date | E52 | ![behaviour: Free Text](https://img.shields.io/badge/behaviour-Free Text-0969da) | The timeframe during which the project was active. |
-| Optional | Related Documents | Reports; Publications; Proposals | E31 | ![behaviour: Select Entity](https://img.shields.io/badge/behaviour-Select Entity-8250df) | Documents associated with the project. |
-| Optional | Parent Project | Programme; Umbrella Project | E7 | ![behaviour: Select Entity](https://img.shields.io/badge/behaviour-Select Entity-8250df) | A broader project or programme within which this project is situated. Note: sometimes treated as E89 Propositional Object in other mappings, but can be implemented as E7 Activity in ResearchSpace. |
-| ✓ | Project Type | Campaign; Research Project; Survey | E55 | ![behaviour: Controlled List](https://img.shields.io/badge/behaviour-Controlled List-1a7f37) | A simple classification describing the nature of the project. |
-| ✓ | condition state type | Planned; Ongoing; Completed; Legacy | E55 | ![behaviour: Controlled List](https://img.shields.io/badge/behaviour-Controlled List-1a7f37) | Indicates the current state or completion level of the project. |
+| Optional | Persistent Identifier (PID) | Project ID; PID | E42 | ![behaviour: External ID](https://img.shields.io/badge/behaviour-External%20ID-0e7490) | Optional public unique identifier for the project. |
+| ✓ | Unique System Label or ID | Database or System ID/Label | E41 | ![behaviour: System ID](https://img.shields.io/badge/behaviour-System%20ID-57606a) | Required within some documentation or database systems, such as ResearchSpace required label. |
+| ✓ | Project Title | Name | E35 | ![behaviour: Free Text](https://img.shields.io/badge/behaviour-Free%20Text-0969da) | Human-readable title for the project or campaign. |
+| ✓ | Project Owner | Responsible Institution or Person | E39 | ![behaviour: Select Entity](https://img.shields.io/badge/behaviour-Select%20Entity-8250df) | The primary organisation or individual responsible for the project. |
+| Optional | Other Actors | Contributors; Collaborators | E39 | ![behaviour: Select Entity](https://img.shields.io/badge/behaviour-Select%20Entity-8250df) | Other individuals or organisations involved in the project. |
+| ✓ | Project Description | Summary; Scope | E73 | ![behaviour: Free Text](https://img.shields.io/badge/behaviour-Free%20Text-0969da) | Short description outlining the purpose and scope of the project. |
+| ✓ | Project Dates | Start Date; End Date | E52 | ![behaviour: Free Text](https://img.shields.io/badge/behaviour-Free%20Text-0969da) | The timeframe during which the project was active. |
+| Optional | Related Documents | Reports; Publications; Proposals | E31 | ![behaviour: Select Entity](https://img.shields.io/badge/behaviour-Select%20Entity-8250df) | Documents associated with the project. |
+| Optional | Parent Project | Programme; Umbrella Project | E7 | ![behaviour: Select Entity](https://img.shields.io/badge/behaviour-Select%20Entity-8250df) | A broader project or programme within which this project is situated. Note: sometimes treated as E89 Propositional Object in other mappings, but can be implemented as E7 Activity in ResearchSpace. |
+| ✓ | Project Type | Campaign; Research Project; Survey | E55 | ![behaviour: Controlled List](https://img.shields.io/badge/behaviour-Controlled%20List-1a7f37) | A simple classification describing the nature of the project. |
+| ✓ | condition state type | Planned; Ongoing; Completed; Legacy | E55 | ![behaviour: Controlled List](https://img.shields.io/badge/behaviour-Controlled%20List-1a7f37) | Indicates the current state or completion level of the project. |
 
 ## Contributing
 
