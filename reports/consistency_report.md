@@ -1,8 +1,8 @@
 # Model Consistency Report
 
-_Generated: 2026-03-20 15:16 UTC_
+_Generated: 2026-03-20 17:07 UTC_
 
-**Individual model files analysed:** 16  
+**Individual model files analysed:** 15  
 **Workflow/overview files analysed:** 1  
 
 This report checks consistency of inter-model linking nodes declared in each model's `//subgraph Linked Entities` block. Only declared linked entities are checked -- high-multiplicity classes such as E55 type terms are not flagged unless explicitly declared.
@@ -282,4 +282,4 @@ Each model's linked entities are listed with their declared target models and co
 
 These formed model files do not contain a `//subgraph Linked Entities` block. Add the block to enable consistency checking.
 
-- `frame_part/frame_part_v1.0.tsv`
+_All individual models have a Linked Entities subgraph._

@@ -65,27 +65,17 @@ CIDOC CRM-aligned inter-model connectivity references. These act as the canonica
 |------|--------------|--------|-----------|---------------|
 | Workflows | ![Semantic Workflow](https://img.shields.io/badge/type-semantic--workflow-blue) | [`models/workflows`](models/workflows/) | [v1.0](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/workflows/workflow_cidoc_sample_taking_v1.0.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/workflows/workflow_cidoc_sample_taking_v1.0.tsv) |
 
-### User workflow overviews
-
-Simplified overviews for communication and stakeholder agreement. Not part of the semantic consistency check.
-
-| Name | Type / Status | Folder | Latest TSV | Visualisation |
-|------|--------------|--------|-----------|---------------|
-| User workflows | ![User Workflow](https://img.shields.io/badge/type-user--workflow-blueviolet) | [`models/user_workflows`](models/user_workflows/) | [v1.0](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/user_workflows/workflow_user_sample_taking_v1.0.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/user_workflows/workflow_user_sample_taking_v1.0.tsv) |
-
 ### Domain models
 
 Individual CIDOC CRM domain models, each covering a specific aspect of heritage science documentation.
 
 | Name | Type / Status | Folder | Latest TSV | Visualisation |
 |------|--------------|--------|-----------|---------------|
-| Frame | ![Status: Planned](https://img.shields.io/badge/status-planned-lightgrey) | [`models/frame`](models/frame/) | -- | -- |
-| Frame part | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/frame_part`](models/frame_part/) | [v1.0](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/frame_part/frame_part_v1.0.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/frame_part/frame_part_v1.0.tsv) |
 | Heritage object | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/heritage_object`](models/heritage_object/) | [v1.7](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/heritage_object/heritage_object_v1.7.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/heritage_object/heritage_object_v1.7.tsv) |
 | Heritage object component | ![Status: Precursor](https://img.shields.io/badge/status-precursor-orange) | [`models/heritage_object_component`](models/heritage_object_component/) | _Precursor files only_ | -- |
 | Heritage object image | ![Status: Precursor](https://img.shields.io/badge/status-precursor-orange) | [`models/heritage_object_image`](models/heritage_object_image/) | _Precursor files only_ | -- |
 | Heritage object layer | ![Status: Precursor](https://img.shields.io/badge/status-precursor-orange) | [`models/heritage_object_layer`](models/heritage_object_layer/) | _Precursor files only_ | -- |
-| Heritage object part | ![Status: Mixed](https://img.shields.io/badge/status-mixed-yellow) | [`models/heritage_object_part`](models/heritage_object_part/) | [v1.1](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/heritage_object_part/heritage_object_part_v1.1.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/heritage_object_part/heritage_object_part_v1.1.tsv) |
+| Heritage object part | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/heritage_object_part`](models/heritage_object_part/) | [v1.1](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/heritage_object_part/heritage_object_part_v1.1.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/heritage_object_part/heritage_object_part_v1.1.tsv) |
 | Location | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/location`](models/location/) | [v1.1](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/location/location_v1.1.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/location/location_v1.1.tsv) |
 | Organisation | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/organisation`](models/organisation/) | [v1.0](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/organisation/organisation_v1.0.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/organisation/organisation_v1.0.tsv) |
 | Person | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/person`](models/person/) | [v1.2](https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/person/person_v1.2.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main/models/person/person_v1.2.tsv) |
