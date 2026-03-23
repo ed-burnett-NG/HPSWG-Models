@@ -9,7 +9,7 @@ Document Note: Sample Model Overview	tooltip	This model defines a Sample using a
 
 //subgraph Linked Entities
 S2: Sample Taking	tooltip	The event during which the sample was physically removed from its source object.	event-fs24|
-//links S2: Sample Taking --> sample_taking_event
+//links S2: Sample Taking --> sample_taking
 S24: Sample Splitting	tooltip	The event during which a new child sample was physically separated from the parent sample.	event-fs24|
 //links S24: Sample Splitting --> sample_splitting
 E39: Organisation or Person	tooltip	The legal owner of the sample.	actor-fs24|

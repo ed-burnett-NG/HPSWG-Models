@@ -22,7 +22,7 @@ E57: Other Material	tooltip	Any material forming part of the original compositio
 E22: Support	tooltip	The physical base material or structure of the heritage object. This can include designation of different types of support, for example, primary support (eg original canvas) and secondary support (eg lining canvas) as parts of a painting.	object-fs24|
 //links E22: Support --> heritage_object_part
 E12: Production Event	tooltip	The creative or manufacturing event during which the Heritage Object was produced or completed.	event-fs24|
-//links E12: Production Event --> production_event
+//links E12: Production Event --> production
 EX_Digital_Image: Main Object Image	tooltip	The primary selected image representing the heritage object, used for thumbnails, search results, and default display. Normally a current, full front-facing view of the object.	digital2-fs24|
 //links EX_Digital_Image: Main Object Image --> rs:EX_Digital_Image
 EX_Digital_Image: Object Image	tooltip	All other images associated with the heritage object held in the system. Acts as a catch-all to support simple image lists and gallery displays; image type and capture technique are defined on the image record or related creation event.	digital2-fs24|

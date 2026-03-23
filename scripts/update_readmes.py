@@ -191,7 +191,7 @@ def get_git_dates(file_path: Path) -> Tuple[str, str]:
 # Discovery
 # ---------------------------------------------------------------------------
 
-EXCLUDED_FOLDERS = {"old_samples", "user_workflows", "heritage_object_part_types", "frame", "frame_part"}
+EXCLUDED_FOLDERS = {"old_samples", "heritage_object_part_types", "frame", "frame_part"}
 
 
 def discover_models() -> Dict[str, ModelFolder]:
