@@ -1,6 +1,6 @@
 # Model Consistency Report
 
-_Generated: 2026-03-23 13:15 UTC_
+_Generated: 2026-03-23 13:32 UTC_
 
 **Individual model files analysed:** 16  
 **Workflow/overview files analysed:** 1  
@@ -269,7 +269,7 @@ Each model's linked entities are listed with their declared target models and co
 | --- | --- | --- | --- |
 | `E31: Report or Document` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `E29: Method or Procedure` | `E29` | `crm:E29` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
-| `E39: Institution or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
+| `E39: Planned by` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
 |  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
 | `E53: Sampling Location` | `E53` | `location` → `E53: Location` | ✅ Consistent |
 | `S2: Sample Taking` | `S2` | `sample_taking` → `S2: Sample Taking` | ✅ Consistent |
