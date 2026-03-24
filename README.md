@@ -63,141 +63,141 @@ classDef timespan stroke:blue,fill:#ddfffe,color:black,rx:20px,ry:20px;
 classDef place2 stroke:#3a7a3a,fill:#aff090,color:black,rx:20px,ry:20px;
 classDef classstyle stroke:black,fill:white,color:black,rx:5px,ry:5px;
 
-  heritage_object["heritage_object\nE22: Heritage Object"]:::event
-  heritage_object_part["heritage_object_part\nE22/S20: Heritage Object Part"]:::event
-  location["location\nE53: Location"]:::event
-  organisation["organisation\nE74: Organisation"]:::event
-  person["person\nE21: Person"]:::event
-  production["production\nE12: Production"]:::event
-  project["project\nE7: Project"]:::event
-  sample["sample\nE22: Physical Sample"]:::event
-  sample_modification["sample_modification\nE11: Sample Modification"]:::event
-  sample_observation["sample_observation\nS27: Sample Observation"]:::event
-  sample_site["sample_site\nE26: Sample Site"]:::event
-  sample_splitting["sample_splitting\nS24: Sample Splitting"]:::event
-  sample_storage_unit["sample_storage_unit\nE22: Storage Unit"]:::event
-  sample_taking["sample_taking\nS2: Sample Taking"]:::event
-  sampling_activity["sampling_activity\nE7: Sampling Activity"]:::event
-  crm_E26["crm:E26"]:::crm
-  crm_E29["crm:E29"]:::crm
-  crm_E31["crm:E31"]:::crm
-  crm_E54["crm:E54"]:::crm
-  crm_E57["crm:E57"]:::crm
-  crm_E70["crm:E70"]:::crm
-  crm_E78["crm:E78"]:::crm
-  crm_E94["crm:E94"]:::crm
-  rs_EX_Digital_Image["rs:EX_Digital_Image"]:::crm
-  rs_EX_Digital_Image_Region["rs:EX_Digital_Image_Region"]:::crm
+  heritage_object["E22: Heritage Object\nheritage_object"]:::object
+  heritage_object_part["E22/S20: Heritage Object Part\nheritage_object_part"]:::object
+  location["E53: Location\nlocation"]:::place
+  organisation["E74: Organisation\norganisation"]:::actor
+  person["E21: Person\nperson"]:::actor
+  production["E12: Production\nproduction"]:::event
+  project["E7: Project\nproject"]:::event
+  sample["E22: Physical Sample\nsample"]:::object
+  sample_modification["E11: Sample Modification\nsample_modification"]:::event
+  sample_observation["S27: Sample Observation\nsample_observation"]:::event
+  sample_site["E26: Sample Site\nsample_site"]:::place
+  sample_splitting["S24: Sample Splitting\nsample_splitting"]:::event
+  sample_storage_unit["E22: Storage Unit\nsample_storage_unit"]:::object
+  sample_taking["S2: Sample Taking\nsample_taking"]:::event
+  sampling_activity["E7: Sampling Activity\nsampling_activity"]:::event
+  crm_E26["crm:E26"]:::place_bn
+  crm_E29["crm:E29"]:::crm_bn
+  crm_E31["crm:E31"]:::document_bn
+  crm_E54["crm:E54"]:::dims_bn
+  crm_E57["crm:E57"]:::crm_bn
+  crm_E70["crm:E70"]:::crm_bn
+  crm_E78["crm:E78"]:::crm_bn
+  crm_E94["crm:E94"]:::crm_bn
+  rs_EX_Digital_Image["rs:EX_Digital_Image"]:::digital2_bn
+  rs_EX_Digital_Image_Region["rs:EX_Digital_Image_Region"]:::digital2_bn
   annotation_image["annotation_image"]:::missing
 
-  heritage_object -->|"E39: Organisation or Person"| person
-  heritage_object -->|"E39: Organisation or Person"| organisation
-  heritage_object -->|"E53: Institution or Place"| location
-  heritage_object -->|"E54: Dimensions"| crm_E54
-  heritage_object -->|"E78: Collection (Curated Holding)"| crm_E78
-  heritage_object -->|"E31: Report or Document"| crm_E31
-  heritage_object -->|"E57: Medium"| crm_E57
-  heritage_object -->|"E57: Other Material"| crm_E57
-  heritage_object -->|"E22: Support"| heritage_object_part
-  heritage_object -->|"E12: Production Event"| production
-  heritage_object -->|"EX_Digital_Image: Main Object Image"| rs_EX_Digital_Image
-  heritage_object -->|"EX_Digital_Image: Object Image"| rs_EX_Digital_Image
-  heritage_object_part -->|"E22: Heritage Object"| heritage_object
-  heritage_object_part -->|"E31: Report or Document"| crm_E31
-  heritage_object_part -->|"E57: Material"| crm_E57
-  heritage_object_part -->|"E54: Dimensions"| crm_E54
-  heritage_object_part -->|"E12: Production Event"| production
-  heritage_object_part -->|"E22/S13: Heritage Sample"| sample
-  location -->|"E31: Location Documents"| crm_E31
-  location -->|"E94: Geometry (Space Primitive)"| crm_E94
-  organisation -->|"E21: Person (Member)"| person
-  organisation -->|"E53: Location (Place of Organisation)"| location
-  organisation -->|"E31: Organisation Documents"| crm_E31
-  organisation -->|"E74: Parent Organisation"| organisation
-  person -->|"E74: Organisation (Affiliation)"| organisation
-  person -->|"E53: Place (Residence)"| location
-  person -->|"E31: Person Documents"| crm_E31
-  production -->|"E22: Heritage Object"| heritage_object
-  production -->|"E39: Group or Artist"| person
-  production -->|"E39: Group or Artist"| organisation
-  production -->|"E53: Place of Production"| location
-  production -->|"E31: Production Documents"| crm_E31
-  project -->|"E39: Project Owner"| person
-  project -->|"E39: Project Owner"| organisation
-  project -->|"E39: Other Actors"| person
-  project -->|"E39: Other Actors"| organisation
-  project -->|"E31: Related Documents"| crm_E31
-  project -->|"E7: Parent Project"| project
-  sample -->|"S2: Sample Taking"| sample_taking
-  sample -->|"S24: Sample Splitting"| sample_splitting
-  sample -->|"E39: Sample Owner"| person
-  sample -->|"E39: Sample Owner"| organisation
-  sample -->|"E53: Organisation or Address"| location
-  sample -->|"E39: Sample Keeper"| person
-  sample -->|"E39: Sample Keeper"| organisation
-  sample -->|"E31: Sample Documents"| crm_E31
-  sample -->|"S27: Observation"| sample_observation
-  sample -->|"E11: Sample Modification"| sample_modification
-  sample -->|"EX_Digital_Image: Main Sample Image"| rs_EX_Digital_Image
-  sample -->|"EX_Digital_Image: Sample Image"| rs_EX_Digital_Image
-  sample -->|"E53: Storage Location"| location
-  sample -->|"E22: Storage Unit"| sample_storage_unit
-  sample_modification -->|"E22/S13: Heritage Sample"| sample
-  sample_modification -->|"E39: Institution or Person"| person
-  sample_modification -->|"E39: Institution or Person"| organisation
-  sample_modification -->|"E53: Place of Modification"| location
-  sample_modification -->|"E31: Report or Document"| crm_E31
-  sample_modification -->|"E29: Method / Protocol"| crm_E29
-  sample_modification -->|"E57: Material Used"| crm_E57
-  sample_modification -->|"E70: Tool / Equipment"| crm_E70
-  sample_observation -->|"E22/S13: Heritage Sample"| sample
-  sample_observation -->|"E39: Institution or Person"| person
-  sample_observation -->|"E39: Institution or Person"| organisation
-  sample_observation -->|"E53: Place of Observation"| location
-  sample_observation -->|"E31: Report or Document"| crm_E31
-  sample_observation -->|"E29: Method / Protocol"| crm_E29
-  sample_observation -->|"E70: Instrument / Equipment"| crm_E70
-  sample_site -->|"E22: Heritage Object"| heritage_object
-  sample_site -->|"E22/S13: Heritage Sample"| sample
-  sample_site -->|"S2: Sample Taking"| sample_taking
-  sample_site -->|"E31: Report or Document"| crm_E31
-  sample_site -->|"EX_Digital_Image_Region"| rs_EX_Digital_Image_Region
-  sample_site -->|"EX_Digital_Image: Annotation Image"| annotation_image
-  sample_site -->|"EX_Digital_Image: Sample Site reference image"| rs_EX_Digital_Image
-  sample_site -->|"EX_Digital_Image: Other Site Image"| rs_EX_Digital_Image
-  sample_site -->|"E22: Heritage Object Part"| heritage_object_part
-  sample_site -->|"E26: Area of Interest"| crm_E26
-  sample_site -->|"E54: Sample Site Coordinates (object)"| crm_E54
-  sample_site -->|"E54: Sample Site Coordinates (annotation image)"| crm_E54
-  sample_splitting -->|"E22/S13: Source Sample"| sample
-  sample_splitting -->|"E22/S13: Sub-Sample"| sample
-  sample_splitting -->|"E39: Organisation or Person"| person
-  sample_splitting -->|"E39: Organisation or Person"| organisation
-  sample_splitting -->|"E53: Splitting Location"| location
-  sample_splitting -->|"E31: Report or Document"| crm_E31
-  sample_splitting -->|"E29: Method or Procedure"| crm_E29
-  sample_splitting -->|"E70: Tool / Equipment"| crm_E70
-  sample_storage_unit -->|"E39: Storage Keeper"| person
-  sample_storage_unit -->|"E39: Storage Keeper"| organisation
-  sample_storage_unit -->|"E53: Storage Location (Place)"| location
-  sample_storage_unit -->|"E31: Storage Documents"| crm_E31
-  sample_storage_unit -->|"E29: Storage Method / Protocol"| crm_E29
-  sample_taking -->|"E22: Heritage Object"| heritage_object
-  sample_taking -->|"E22/S13: Heritage Sample"| sample
-  sample_taking -->|"E31: Report or Document"| crm_E31
-  sample_taking -->|"E29: Method or Procedure"| crm_E29
-  sample_taking -->|"E39: Sample taken by"| person
-  sample_taking -->|"E39: Sample taken by"| organisation
-  sample_taking -->|"E53: Sampling Location"| location
-  sample_taking -->|"E26: Sample Site"| sample_site
-  sampling_activity -->|"E31: Report or Document"| crm_E31
-  sampling_activity -->|"E29: Method or Procedure"| crm_E29
-  sampling_activity -->|"E39: Planned by"| person
-  sampling_activity -->|"E39: Planned by"| organisation
-  sampling_activity -->|"E53: Sampling Location"| location
-  sampling_activity -->|"S2: Sample Taking"| sample_taking
-  sampling_activity -->|"E22: Heritage Object"| heritage_object
-  sampling_activity -->|"E7: Project"| project
+  heritage_object ---->|"E39: Organisation or Person"|person
+  heritage_object ---->|"E39: Organisation or Person"|organisation
+  heritage_object ---->|"E53: Institution or Place"|location
+  heritage_object ---->|"E54: Dimensions"|crm_E54
+  heritage_object ---->|"E78: Collection (Curated Holding)"|crm_E78
+  heritage_object ---->|"E31: Report or Document"|crm_E31
+  heritage_object ---->|"E57: Medium"|crm_E57
+  heritage_object ---->|"E57: Other Material"|crm_E57
+  heritage_object ---->|"E22: Support"|heritage_object_part
+  heritage_object ---->|"E12: Production Event"|production
+  heritage_object ---->|"EX_Digital_Image: Main Object Image"|rs_EX_Digital_Image
+  heritage_object ---->|"EX_Digital_Image: Object Image"|rs_EX_Digital_Image
+  heritage_object_part ---->|"E22: Heritage Object"|heritage_object
+  heritage_object_part ---->|"E31: Report or Document"|crm_E31
+  heritage_object_part ---->|"E57: Material"|crm_E57
+  heritage_object_part ---->|"E54: Dimensions"|crm_E54
+  heritage_object_part ---->|"E12: Production Event"|production
+  heritage_object_part ---->|"E22/S13: Heritage Sample"|sample
+  location ---->|"E31: Location Documents"|crm_E31
+  location ---->|"E94: Geometry (Space Primitive)"|crm_E94
+  organisation ---->|"E21: Person (Member)"|person
+  organisation ---->|"E53: Location (Place of Organisation)"|location
+  organisation ---->|"E31: Organisation Documents"|crm_E31
+  organisation ---->|"E74: Parent Organisation"|organisation
+  person ---->|"E74: Organisation (Affiliation)"|organisation
+  person ---->|"E53: Place (Residence)"|location
+  person ---->|"E31: Person Documents"|crm_E31
+  production ---->|"E22: Heritage Object"|heritage_object
+  production ---->|"E39: Group or Artist"|person
+  production ---->|"E39: Group or Artist"|organisation
+  production ---->|"E53: Place of Production"|location
+  production ---->|"E31: Production Documents"|crm_E31
+  project ---->|"E39: Project Owner"|person
+  project ---->|"E39: Project Owner"|organisation
+  project ---->|"E39: Other Actors"|person
+  project ---->|"E39: Other Actors"|organisation
+  project ---->|"E31: Related Documents"|crm_E31
+  project ---->|"E7: Parent Project"|project
+  sample ---->|"S2: Sample Taking"|sample_taking
+  sample ---->|"S24: Sample Splitting"|sample_splitting
+  sample ---->|"E39: Sample Owner"|person
+  sample ---->|"E39: Sample Owner"|organisation
+  sample ---->|"E53: Organisation or Address"|location
+  sample ---->|"E39: Sample Keeper"|person
+  sample ---->|"E39: Sample Keeper"|organisation
+  sample ---->|"E31: Sample Documents"|crm_E31
+  sample ---->|"S27: Observation"|sample_observation
+  sample ---->|"E11: Sample Modification"|sample_modification
+  sample ---->|"EX_Digital_Image: Main Sample Image"|rs_EX_Digital_Image
+  sample ---->|"EX_Digital_Image: Sample Image"|rs_EX_Digital_Image
+  sample ---->|"E53: Storage Location"|location
+  sample ---->|"E22: Storage Unit"|sample_storage_unit
+  sample_modification ---->|"E22/S13: Heritage Sample"|sample
+  sample_modification ---->|"E39: Institution or Person"|person
+  sample_modification ---->|"E39: Institution or Person"|organisation
+  sample_modification ---->|"E53: Place of Modification"|location
+  sample_modification ---->|"E31: Report or Document"|crm_E31
+  sample_modification ---->|"E29: Method / Protocol"|crm_E29
+  sample_modification ---->|"E57: Material Used"|crm_E57
+  sample_modification ---->|"E70: Tool / Equipment"|crm_E70
+  sample_observation ---->|"E22/S13: Heritage Sample"|sample
+  sample_observation ---->|"E39: Institution or Person"|person
+  sample_observation ---->|"E39: Institution or Person"|organisation
+  sample_observation ---->|"E53: Place of Observation"|location
+  sample_observation ---->|"E31: Report or Document"|crm_E31
+  sample_observation ---->|"E29: Method / Protocol"|crm_E29
+  sample_observation ---->|"E70: Instrument / Equipment"|crm_E70
+  sample_site ---->|"E22: Heritage Object"|heritage_object
+  sample_site ---->|"E22/S13: Heritage Sample"|sample
+  sample_site ---->|"S2: Sample Taking"|sample_taking
+  sample_site ---->|"E31: Report or Document"|crm_E31
+  sample_site ---->|"EX_Digital_Image_Region"|rs_EX_Digital_Image_Region
+  sample_site ---->|"EX_Digital_Image: Annotation Image"|annotation_image
+  sample_site ---->|"EX_Digital_Image: Sample Site reference image"|rs_EX_Digital_Image
+  sample_site ---->|"EX_Digital_Image: Other Site Image"|rs_EX_Digital_Image
+  sample_site ---->|"E22: Heritage Object Part"|heritage_object_part
+  sample_site ---->|"E26: Area of Interest"|crm_E26
+  sample_site ---->|"E54: Sample Site Coordinates (object)"|crm_E54
+  sample_site ---->|"E54: Sample Site Coordinates (annotation image)"|crm_E54
+  sample_splitting ---->|"E22/S13: Source Sample"|sample
+  sample_splitting ---->|"E22/S13: Sub-Sample"|sample
+  sample_splitting ---->|"E39: Organisation or Person"|person
+  sample_splitting ---->|"E39: Organisation or Person"|organisation
+  sample_splitting ---->|"E53: Splitting Location"|location
+  sample_splitting ---->|"E31: Report or Document"|crm_E31
+  sample_splitting ---->|"E29: Method or Procedure"|crm_E29
+  sample_splitting ---->|"E70: Tool / Equipment"|crm_E70
+  sample_storage_unit ---->|"E39: Storage Keeper"|person
+  sample_storage_unit ---->|"E39: Storage Keeper"|organisation
+  sample_storage_unit ---->|"E53: Storage Location (Place)"|location
+  sample_storage_unit ---->|"E31: Storage Documents"|crm_E31
+  sample_storage_unit ---->|"E29: Storage Method / Protocol"|crm_E29
+  sample_taking ---->|"E22: Heritage Object"|heritage_object
+  sample_taking ---->|"E22/S13: Heritage Sample"|sample
+  sample_taking ---->|"E31: Report or Document"|crm_E31
+  sample_taking ---->|"E29: Method or Procedure"|crm_E29
+  sample_taking ---->|"E39: Sample taken by"|person
+  sample_taking ---->|"E39: Sample taken by"|organisation
+  sample_taking ---->|"E53: Sampling Location"|location
+  sample_taking ---->|"E26: Sample Site"|sample_site
+  sampling_activity ---->|"E31: Report or Document"|crm_E31
+  sampling_activity ---->|"E29: Method or Procedure"|crm_E29
+  sampling_activity ---->|"E39: Planned by"|person
+  sampling_activity ---->|"E39: Planned by"|organisation
+  sampling_activity ---->|"E53: Sampling Location"|location
+  sampling_activity ---->|"S2: Sample Taking"|sample_taking
+  sampling_activity ---->|"E22: Heritage Object"|heritage_object
+  sampling_activity ---->|"E7: Project"|project
 ```
 <!-- END AUTO: NG-MODEL-VISUAL -->
 
