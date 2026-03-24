@@ -397,6 +397,7 @@ The ORDER integer in `//field` and `//field-via` lines controls the row sequence
 - **`//field-via` TARGET node is col 1, INTERMEDIATE node follows `via`** -- the human label is derived from the TARGET (col 1), and the CRM code path in the table reads `INTERMEDIATE > TARGET`. Do not reverse these.
 - **`//field-via` requires an explicit DESCRIPTION** -- there is no tooltip in the current model to fall back on for via fields. The description column (col 4) is mandatory.
 - **`//links` targets for planned models** -- it is acceptable to declare a `//links` target pointing to a planned but not yet created model folder. The consistency report will flag it as a missing target (`❓`), which serves as a reminder to develop that model. This is the intended workflow for incrementally building out the inter-model graph.
+- **The mutual exclusivity** a single user-facing field can map to two or more alternative model paths, with the choice handled by description text rather than separate directives) is a genuinely reusable principle.
  
 ---
  
@@ -410,8 +411,12 @@ The sample domain uses a dual-layer structure. This is still under active discus
 - **Keywords** (`E55: sample keywords`) sit on `E22` as collection management and discovery terms, not on `S13`.
 - **Sample format** (`E55: sample format`) sits on `E22` as it describes physical preparation of the curated object.
 - **Material type** (`E55: sample material type`) sits on `S13` as it describes the matter itself.
-- **Storage** is modelled via a nested `//subgraph Storage Options` within the Linked Entities block, containing `E53: Storage Location` (Option A, direct place link) and `E22: Storage Unit` (Option B, physical container chain). These are mutually exclusive; a `has note` on the Storage Options subgraph explains the choice. `E22: Physical Sample` connects via `P54` to the Storage Options subgraph node.
+- **Storage** The original two-option storage routing via a Storage Options structural note node was replaced with two direct P54_has_current_permanent_location triples from E22: Physical Sample, one to E53: Storage Location and one to E22: Storage Unit. These are mutually exclusive from a data entry perspective: if the specific storage unit is known, the user links to that and the location is inherited through the unit's own records (units may be nested before resolving to a named place); if only the location is known, the user links directly to E53: Storage Location. The Storage Options note node, the Storage Option Note tooltip, and the routing triple through that node were all removed. The E22: Storage Unit and E53: Storage Location entries in the Linked Entities subgraph remain and carry updated tooltips explaining the two options.
 - **Sub-samples** produced by splitting follow the same dual-layer structure, shown as stub nodes (`object_bn`) within a `//subgraph Sub-Sample Entity` block.
+- **Sample State** Uses //field-via E3: Condition state (Sample Status) with behaviour:list. The actual captured value is E55: condition state type selected from a controlled list, but the intermediate E3 is the semantically meaningful unit from a documentation perspective. This is consistent with the approach taken in the sampling_activity model.
+- **Source event (row 21)** The //field directive points to S2: Sample Taking as the primary node. S24: Sample Splitting is the equivalent source event for sub-samples and is covered by the field description text rather than a separate directive. The rationale is that S24 is a subtype of S2, so the field is logically consistent whether the source event is a taking or a splitting.
+- **E16: Measurement** No separate //field directive for E16: Measurement was added. All observation and measurement activity is routed through S27: Observation, which is defined in this model as a parent of E16. A dedicated measurement field can be added if a separate E16 node is reintroduced in a future revision.
+
  
 ### Property selection for sample events
  
