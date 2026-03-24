@@ -43,6 +43,50 @@ LINKS_RE = re.compile(
     r"^\s*//links\s+(.+?)\s*-->\s*(.+?)\s*(\[confirmed\])?\s*$", re.IGNORECASE
 )
 INSTANCE_SUFFIX_RE = re.compile(r"#-\d+$")
+CRM_CODE_RE = re.compile(r"^[A-Za-z]\d+(?:/[A-Za-z]\d+)*$")
+
+# ---------------------------------------------------------------------------
+# Format class mapping
+# ---------------------------------------------------------------------------
+
+CRM_CLASS_TO_FORMAT = {
+    "E7": "event", "E9": "event", "E11": "event", "E12": "event",
+    "E65": "event", "S2": "event", "S24": "event", "S27": "event",
+    "E21": "actor", "E39": "actor", "E74": "actor",
+    "E22": "object", "E18": "object", "E20": "object",
+    "E26": "place", "E53": "place",
+    "E31": "document", "E73": "document",
+    "E54": "dims",
+    "E55": "type",
+    "E41": "name",
+    "E52": "period",
+    "D1": "digital2", "D9": "digital2",
+    "S13": "object", "S10": "object",
+}
+
+
+def class_code_to_format(code: str, blank_node: bool = False) -> str:
+    """Map a CRM class code to a Dynamic Modeller format class string."""
+    base = CRM_CLASS_TO_FORMAT.get(code.split("/")[0].strip(), "crm")
+    suffix = "_bn" if blank_node else ""
+    return f"{base}{suffix}-fs24"
+
+
+def ontology_format_class(ref: str) -> str:
+    """Determine the TSV format class for an ontology terminal node."""
+    parts = ref.split(":", 1)
+    if len(parts) < 2:
+        return "digital2_bn-fs24"
+    code = parts[1].strip()
+    if CRM_CODE_RE.match(code):
+        return class_code_to_format(code, blank_node=True)
+    return "digital2_bn-fs24"
+
+
+def format_class_to_mermaid_class(format_class: str) -> str:
+    """Strip the -fs24 suffix to get the Mermaid classDef name."""
+    return format_class.replace("-fs24", "")
+
 
 # ---------------------------------------------------------------------------
 # Hardcoded Mermaid preamble + full classDef block
@@ -101,6 +145,7 @@ classDef classstyle stroke:black,fill:white,color:black,rx:5px,ry:5px;"""
 class ModelInfo:
     folder: str
     key_entity: Optional[str]                       # e.g. "E22: Heritage Object"
+    key_class_code: Optional[str] = None            # e.g. "E22" or "E22/S13"
     links: List[Tuple[str, str]] = field(default_factory=list)
     # links: list of (entity_label, target_raw)
     # target_raw is either a folder name or ontology ref (e.g. "crm:E31")
@@ -191,6 +236,7 @@ def discover_model_folders() -> List[Path]:
 def parse_model_tsv(tsv_path: Path) -> ModelInfo:
     folder = tsv_path.parent.name
     key_entity: Optional[str] = None
+    key_class_code: Optional[str] = None
     links: List[Tuple[str, str]] = []
 
     try:
@@ -256,8 +302,9 @@ def parse_model_tsv(tsv_path: Path) -> ModelInfo:
 
         if key_entity is None:
             key_entity = canonical
+            key_class_code = extract_class_code(canonical)
 
-    return ModelInfo(folder=folder, key_entity=key_entity, links=links)
+    return ModelInfo(folder=folder, key_entity=key_entity, key_class_code=key_class_code, links=links)
 
 
 # ---------------------------------------------------------------------------
@@ -282,6 +329,7 @@ def build_graph(
     models: List[ModelInfo],
 ) -> Tuple[
     Dict[str, Optional[str]],          # repo_nodes: folder -> key_entity
+    Dict[str, Optional[str]],          # repo_class_codes: folder -> key_class_code
     Dict[str, str],                     # ontology_nodes: node_id -> original_ref
     Set[str],                           # missing_nodes: sanitised target names
     List[Tuple[str, str, str]],         # edges: (source_id, label, target_id)
@@ -290,14 +338,16 @@ def build_graph(
     Classify all nodes and collect edges from the parsed model data.
 
     Returns:
-      repo_nodes    -- all discovered model folders (with key entities)
-      ontology_nodes -- ontology ref targets (node_id -> original ref string)
-      missing_nodes -- declared folder targets not present in the repo
-      edges         -- (source_node_id, entity_label, target_node_id)
+      repo_nodes      -- all discovered model folders (with key entities)
+      repo_class_codes -- key entity class code per folder
+      ontology_nodes  -- ontology ref targets (node_id -> original ref string)
+      missing_nodes   -- declared folder targets not present in the repo
+      edges           -- (source_node_id, entity_label, target_node_id)
     """
     all_folders: Set[str] = {m.folder for m in models}
 
     repo_nodes: Dict[str, Optional[str]] = {m.folder: m.key_entity for m in models}
+    repo_class_codes: Dict[str, Optional[str]] = {m.folder: m.key_class_code for m in models}
     ontology_nodes: Dict[str, str] = {}
     missing_nodes: Set[str] = set()
     edges: List[Tuple[str, str, str]] = []
@@ -319,7 +369,7 @@ def build_graph(
 
             edges.append((src_id, entity_label, tgt_id))
 
-    return repo_nodes, ontology_nodes, missing_nodes, edges
+    return repo_nodes, repo_class_codes, ontology_nodes, missing_nodes, edges
 
 
 # ---------------------------------------------------------------------------
@@ -333,6 +383,7 @@ def _mermaid_escape_label(text: str) -> str:
 
 def generate_mermaid(
     repo_nodes: Dict[str, Optional[str]],
+    repo_class_codes: Dict[str, Optional[str]],
     ontology_nodes: Dict[str, str],
     missing_nodes: Set[str],
     edges: List[Tuple[str, str, str]],
@@ -341,24 +392,29 @@ def generate_mermaid(
 
     # --- Node declarations ---
     for folder, key_entity in sorted(repo_nodes.items()):
-        node_id = folder  # folder names are already valid Mermaid IDs
-        label_line1 = folder
-        label_line2 = key_entity if key_entity else folder
+        node_id = folder
+        code = repo_class_codes.get(folder) or ""
+        fmt = class_code_to_format(code) if code else "crm-fs24"
+        mermaid_class = format_class_to_mermaid_class(fmt)
+        label_line1 = key_entity if key_entity else folder
+        label_line2 = folder
         display = f"{label_line1}\\n{label_line2}"
-        lines.append(f'  {node_id}["{display}"]:::event')
+        lines.append(f'  {node_id}["{display}"]:::{mermaid_class}')
 
     for node_id, original_ref in sorted(ontology_nodes.items()):
-        lines.append(f'  {node_id}["{original_ref}"]:::crm')
+        fmt = ontology_format_class(original_ref)
+        mermaid_class = format_class_to_mermaid_class(fmt)
+        lines.append(f'  {node_id}["{original_ref}"]:::{mermaid_class}')
 
     for node_id in sorted(missing_nodes):
         lines.append(f'  {node_id}["{node_id}"]:::missing')
 
     lines.append("")
 
-    # --- Edges ---
+    # --- Edges (using ---->|"label"| fix syntax) ---
     for src_id, label, tgt_id in edges:
         quoted = _mermaid_escape_label(label)
-        lines.append(f"  {src_id} -->|{quoted}| {tgt_id}")
+        lines.append(f"  {src_id} ---->|{quoted}|{tgt_id}")
 
     lines.append("")
     return "\n".join(lines)
@@ -370,19 +426,23 @@ def generate_mermaid(
 
 def generate_tsv(
     repo_nodes: Dict[str, Optional[str]],
+    repo_class_codes: Dict[str, Optional[str]],
     ontology_nodes: Dict[str, str],
     missing_nodes: Set[str],
     edges: List[Tuple[str, str, str]],
 ) -> str:
-    lines = ["// Overview", "//Flowchart LR"]
+    lines = ["// Overview", "//Flowchart LR fix"]
 
     # --- Node declarations (tooltip + format class, first mention only) ---
     for folder, key_entity in sorted(repo_nodes.items()):
         label = key_entity if key_entity else folder
-        lines.append(f"{folder}\ttooltip\t{label}\tevent-fs24|")
+        code = repo_class_codes.get(folder) or ""
+        fmt = class_code_to_format(code) if code else "crm-fs24"
+        lines.append(f"{folder}\ttooltip\t{label}\t{fmt}|")
 
     for node_id, original_ref in sorted(ontology_nodes.items()):
-        lines.append(f"{node_id}\ttooltip\t{original_ref}\tcrm-fs24|")
+        fmt = ontology_format_class(original_ref)
+        lines.append(f"{node_id}\ttooltip\t{original_ref}\t{fmt}|")
 
     for node_id in sorted(missing_nodes):
         lines.append(f"{node_id}\ttooltip\t{node_id}\tmissing-5-5|")
@@ -458,7 +518,7 @@ def main():
 
     models = [parse_model_tsv(p) for p in tsv_paths]
 
-    repo_nodes, ontology_nodes, missing_nodes, edges = build_graph(models)
+    repo_nodes, repo_class_codes, ontology_nodes, missing_nodes, edges = build_graph(models)
 
     print(
         f"  Repo model nodes:     {len(repo_nodes)}\n"
@@ -468,12 +528,12 @@ def main():
     )
 
     # Write Mermaid
-    mermaid_content = generate_mermaid(repo_nodes, ontology_nodes, missing_nodes, edges)
+    mermaid_content = generate_mermaid(repo_nodes, repo_class_codes, ontology_nodes, missing_nodes, edges)
     OVERVIEW_MMD.write_text(mermaid_content, encoding="utf-8")
     print(f"Mermaid diagram written to {OVERVIEW_MMD.relative_to(REPO_ROOT)}")
 
     # Write TSV (versioned)
-    tsv_content = generate_tsv(repo_nodes, ontology_nodes, missing_nodes, edges)
+    tsv_content = generate_tsv(repo_nodes, repo_class_codes, ontology_nodes, missing_nodes, edges)
     written = write_overview_tsv(OVERVIEW_DIR, tsv_content)
     if written:
         print(f"Overview TSV written to {written.relative_to(REPO_ROOT)}")
