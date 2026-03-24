@@ -40,6 +40,7 @@ REPORTS_DIR = REPO_ROOT / "reports"
 FORMS_DIR = REPO_ROOT / "forms"
 NG_MERMAID_FILE = MODELS_DIR / "ng_models_mermaid.mmd"
 OVERVIEW_MMD_FILE = MODELS_DIR / "overview_mermaid.mmd"
+OVERVIEW_LINK_FILE = MODELS_DIR / "overview_link.md"
 ONTOLOGIES_FILE = REPO_ROOT / "scripts" / "ontologies.json"
 
 VERSION_RE = re.compile(r"_v(\d+(?:\.\d+)*)\.tsv$")
@@ -1184,6 +1185,12 @@ def write_forms_outputs(folders: Dict[str, ModelFolder], raw_base: str):
 # ---------------------------------------------------------------------------
 
 
+def read_overview_link() -> str:
+    if OVERVIEW_LINK_FILE.exists():
+        return OVERVIEW_LINK_FILE.read_text(encoding="utf-8").strip()
+    return ""
+
+
 def read_mermaid_block() -> str:
     if OVERVIEW_MMD_FILE.exists():
         text = OVERVIEW_MMD_FILE.read_text(encoding="utf-8").strip()
@@ -1203,8 +1210,10 @@ def write_top_readme(
 
     template = template_path.read_text(encoding="utf-8")
 
+    link_text = read_overview_link()
     mermaid_block = read_mermaid_block()
-    content = replace_auto_block(template, "NG-MODEL-VISUAL", mermaid_block)
+    visual_block = (link_text + "\n\n" + mermaid_block) if link_text else mermaid_block
+    content = replace_auto_block(template, "NG-MODEL-VISUAL", visual_block)
     content = replace_auto_block(
         content, "MODEL-LIST", generate_model_list_block(folders, raw_base)
     )

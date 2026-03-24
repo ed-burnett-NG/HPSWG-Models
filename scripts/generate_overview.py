@@ -12,6 +12,7 @@ workflow folders and EXCLUDED_FOLDERS), parses each for its key entity and
   models/overview/overview_v*.tsv     -- Dynamic Modeller TSV (auto-versioned)
 """
 
+import os
 import re
 import sys
 from dataclasses import dataclass, field
@@ -26,6 +27,11 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 MODELS_DIR = REPO_ROOT / "models"
 OVERVIEW_DIR = MODELS_DIR / "overview"
 OVERVIEW_MMD = MODELS_DIR / "overview_mermaid.mmd"
+OVERVIEW_LINK_FILE = MODELS_DIR / "overview_link.md"
+
+OVERVIEW_LINK_FALLBACK_BASE = (
+    "https://raw.githubusercontent.com/jpadfield/HPSWG-Models/refs/heads/main"
+)
 
 EXCLUDED_FOLDERS = {"old_samples", "heritage_object_part_types", "frame", "frame_part", "overview"}
 WORKFLOW_FOLDERS = {"workflows", "user_workflows"}
@@ -53,15 +59,16 @@ CRM_CLASS_TO_FORMAT = {
     "E7": "event", "E9": "event", "E11": "event", "E12": "event",
     "E65": "event", "S2": "event", "S24": "event", "S27": "event",
     "E21": "actor", "E39": "actor", "E74": "actor",
-    "E22": "object", "E18": "object", "E20": "object",
+    "E22": "object", "E18": "object", "E20": "object", "E70": "object", "E57": "object","E78": "object",
     "E26": "place", "E53": "place",
-    "E31": "document", "E73": "document",
+    "E31": "document", "E73": "document", "E29": "document",
     "E54": "dims",
     "E55": "type",
     "E41": "name",
     "E52": "period",
     "D1": "digital2", "D9": "digital2",
     "S13": "object", "S10": "object",
+    "E94": "place2",
 }
 
 
@@ -505,6 +512,20 @@ def write_overview_tsv(tsv_dir: Path, content: str) -> Optional[Path]:
 
 
 # ---------------------------------------------------------------------------
+# Overview link file
+# ---------------------------------------------------------------------------
+
+def write_overview_link(tsv_path: Path) -> None:
+    """Write models/overview_link.md with a Dynamic Modeller link to tsv_path."""
+    raw_base = os.environ.get("RAW_BASE", "").rstrip("/") or OVERVIEW_LINK_FALLBACK_BASE
+    rel = tsv_path.relative_to(REPO_ROOT).as_posix()
+    raw_url = f"{raw_base}/{rel}"
+    modeller_url = f"https://research.nationalgallery.org.uk/lab/modelling/?url={raw_url}"
+    OVERVIEW_LINK_FILE.write_text(f"[Open in Dynamic Modeller]({modeller_url})\n", encoding="utf-8")
+    print(f"Overview link written to {OVERVIEW_LINK_FILE.relative_to(REPO_ROOT)}")
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -536,9 +557,16 @@ def main():
     tsv_content = generate_tsv(repo_nodes, repo_class_codes, ontology_nodes, missing_nodes, edges)
     written = write_overview_tsv(OVERVIEW_DIR, tsv_content)
     if written:
+        current_tsv = written
         print(f"Overview TSV written to {written.relative_to(REPO_ROOT)}")
     else:
         print("Overview TSV unchanged -- no new version written.")
+        latest = latest_overview_version(OVERVIEW_DIR)
+        current_tsv = latest[1] if latest else None
+
+    # Write companion link file
+    if current_tsv is not None:
+        write_overview_link(current_tsv)
 
     if missing_nodes:
         print(f"\nNote: {len(missing_nodes)} declared target(s) not found in repo: "
