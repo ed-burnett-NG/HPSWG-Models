@@ -1,6 +1,6 @@
 # Model Consistency Report
 
-_Generated: 2026-03-24 11:37 UTC_
+_Generated: 2026-03-24 14:04 UTC_
 
 **Individual model files analysed:** 16  
 **Workflow/overview files analysed:** 1  
@@ -152,21 +152,24 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>sample/sample_v1.8.tsv</strong> -- 11 confirmed</summary>
+<summary><strong>sample/sample_v1.8.tsv</strong> -- 14 confirmed</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
 | `S2: Sample Taking` | `S2` | `sample_taking` → `S2: Sample Taking` | ✅ Consistent |
 | `S24: Sample Splitting` | `S24` | `sample_splitting` → `S24: Sample Splitting` | ✅ Consistent |
-| `E39: Organisation or Person` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
+| `E39: Sample Owner` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
 |  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
 | `E53: Organisation or Address` | `E53` | `location` → `E53: Location` | ✅ Consistent |
+| `E39: Sample Keeper` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
+|  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
 | `E31: Sample Documents` | `E31` | `crm:E31` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
-| `E16: Measurement` | `E16` | `crm:E16` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `S27: Observation` | `S27` | `sample_observation` → `S27: Sample Observation` | ✅ Consistent |
 | `E11: Sample Modification` | `E11` | `sample_modification` → `E11: Sample Modification` | ✅ Consistent |
 | `EX_Digital_Image: Main Sample Image` | `EX_Digital_Image` | `rs:EX_Digital_Image` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `EX_Digital_Image: Sample Image` | `EX_Digital_Image` | `rs:EX_Digital_Image` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
+| `E53: Storage Location` | `E53` | `location` → `E53: Location` | ✅ Consistent |
+| `E22: Storage Unit` | `E22` | `sample_storage_unit` → `E22: Storage Unit` | ✅ Consistent |
 
 </details>
 
