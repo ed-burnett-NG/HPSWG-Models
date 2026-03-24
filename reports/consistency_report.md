@@ -1,6 +1,6 @@
 # Model Consistency Report
 
-_Generated: 2026-03-24 11:07 UTC_
+_Generated: 2026-03-24 11:09 UTC_
 
 **Individual model files analysed:** 16  
 **Workflow/overview files analysed:** 1  
@@ -202,7 +202,7 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>sample_site/sample_site_v1.6.tsv</strong> -- 9 confirmed, 1 missing target, 2 undeclared</summary>
+<summary><strong>sample_site/sample_site_v1.6.tsv</strong> -- 10 confirmed, 1 missing target</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
@@ -215,8 +215,7 @@ Each model's linked entities are listed with their declared target models and co
 | `EX_Digital_Image: Other Site Image` | `EX_Digital_Image` | `rs:EX_Digital_Image` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `E22: Heritage Object Part` | `E22` | `heritage_object_part` → `E22/S20: Heritage Object Part` | ✅ Consistent |
 | `E26: Area of Interest` | `E26` | `crm:E26` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
-| `E54: Sample Site Coordinates (object)` | `E54` | _No matching models found_ | ⚠ No declaration |
-| `E54: E54: Sample Site Coordinates (annotation image)` | `E54` | _No matching models found_ | ⚠ No declaration |
+| `E54: Sample Site Coordinates (object)` | `E54` | `crm:E54` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `E54: Sample Site Coordinates (annotation image)` | `E54` | `crm:E54` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 
 </details>
