@@ -580,8 +580,17 @@ def generate_precursor_block(mf: ModelFolder, raw_base: str) -> str:
 # Field directive parsing and table generation
 # ---------------------------------------------------------------------------
 
+# NEW
 # Regex to strip CRM class prefix, e.g. "E42: " or "S13: " or "crm:E42: "
 _CRM_PREFIX_RE = re.compile(r"^[A-Za-z0-9]+:\s*")
+
+# Known ResearchSpace class name prefixes that should be stripped from human labels.
+# These do not match the short alphanumeric CRM pattern (e.g. "E42") so require
+# explicit listing. Extend this set as new RS classes are introduced in models.
+_RS_CLASS_PREFIXES = {
+    "EX_Digital_Image",
+    "EX_Digital_Image_Region",
+}
 
 # Regex to extract multiplicity lower bound from predicate, e.g. "(0 to 1)" or "(1 to 1)"
 _MULTIPLICITY_RE = re.compile(r"\((\d+)\s+to")
@@ -591,8 +600,39 @@ _ALT_LABELS_RE = re.compile(r"\s*\(Alternative labels:[^)]*\)", re.IGNORECASE)
 
 
 def _strip_crm_prefix(label: str) -> str:
-    """Strip leading CRM class prefix from a node label, e.g. 'E42: Foo' -> 'Foo'."""
-    return _CRM_PREFIX_RE.sub("", label, count=1).strip()
+    """
+    Strip leading class prefix from a node label to produce a human-readable label.
+
+    Handles two cases:
+      1. Standard CRM/CRMsci/CRMdig prefix pattern, e.g. 'E42: Foo' -> 'Foo',
+         'S13: Bar' -> 'Bar', 'crm:E42: Foo' -> 'Foo'.
+      2. ResearchSpace class prefixes listed in _RS_CLASS_PREFIXES, e.g.
+         'EX_Digital_Image: Main Image' -> 'Main Image'.
+         If the node label exactly matches a known RS class with no instance
+         qualifier (e.g. 'EX_Digital_Image_Region'), the full label is returned
+         as-is since there is nothing further to strip.
+    """
+    # Try standard CRM pattern first
+    stripped = _CRM_PREFIX_RE.sub("", label, count=1).strip()
+    if stripped != label:
+        return stripped
+
+    # Fallback: check RS class prefixes
+    for rs_class in _RS_CLASS_PREFIXES:
+        if label == rs_class:
+            # No instance qualifier -- return the class name as the label
+            # Split on underscore and title-case for readability,
+            # e.g. 'EX_Digital_Image_Region' -> 'Digital Image Region'
+            parts = rs_class.split("_")
+            # Drop leading 'EX' prefix if present
+            if parts[0].upper() == "EX":
+                parts = parts[1:]
+            return " ".join(p.capitalize() for p in parts)
+        prefix = rs_class + ": "
+        if label.startswith(prefix):
+            return label[len(prefix):].strip()
+
+    return label
 
 
 def _strip_alt_labels(tooltip: str) -> str:
@@ -733,13 +773,22 @@ def _parse_field_line(line: str) -> Optional[FieldRecord]:
     alts = [a.strip() for a in alts_raw.split(";") if a.strip()]
     alts = [a for a in alts if a != human_label]
 
-    # Extract CRM code from node label prefix
-    m = re.match(r"^([A-Za-z0-9]+):", node_label)
-    crm_code = m.group(1) if m else node_label
+    # NEW
+    # Extract CRM code from node label prefix.
+    # For RS class nodes (e.g. 'EX_Digital_Image: Main Image'), use the RS class
+    # name as the code. For nodes that exactly match a known RS class with no
+    # instance qualifier, use the full label as the code.
+    def _extract_code(lbl: str) -> str:
+        for rs_class in _RS_CLASS_PREFIXES:
+            if lbl == rs_class or lbl.startswith(rs_class + ": "):
+                return rs_class
+        m = re.match(r"^([A-Za-z0-9]+):", lbl)
+        return m.group(1) if m else lbl
+
+    crm_code = _extract_code(node_label)
 
     if is_via:
-        m_via = re.match(r"^([A-Za-z0-9]+):", via_label)
-        via_code = m_via.group(1) if m_via else via_label
+        via_code = _extract_code(via_label)
         crm_code = f"{via_code} > {crm_code}"
 
     return FieldRecord(
