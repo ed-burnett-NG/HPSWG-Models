@@ -117,9 +117,9 @@ S2: Sample Taking	O3_sampled_from (1 to 1)	E22: Heritage Object	|event
 
 
 //field E42: Persistent Identifier (e.g. IGSN) | 1 | Sample PID; PID; Persistent Identifier | behaviour:pid
-//field E42: Alternative Identifier | 2 | Alternative Sample ID; Sample No; Sample Code | behaviour:free-text
-//field E41: Unique System Label or ID | 3 | Sample System ID; Database ID; System Label | behaviour:system-id
-//field E41: Sample Name or Code | 4 | Sample ID; Sample No; Sample Code; Sample Name | behaviour:free-text
+//field E41: Unique System Label or ID | 2 | Sample System ID; Database ID; System Label | behaviour:system-id
+//field E41: Sample Name or Code | 3 | Sample ID; Sample No; Sample Code; Sample Name | behaviour:free-text
+//field E42: Alternative Identifier | 4 | Alternative Sample ID; Sample No; Sample Code | behaviour:free-text
 //field E73: Sample description | 5 | Sample Description; Description | behaviour:free-text
 //field E55: sample format | 6 | Sample Format | behaviour:list
 //field E55: sample material type | 7 | Sample Material Type; Material Class; Material of Interest | behaviour:list
