@@ -39,6 +39,7 @@ MODELS_DIR = REPO_ROOT / "models"
 REPORTS_DIR = REPO_ROOT / "reports"
 FORMS_DIR = REPO_ROOT / "forms"
 NG_MERMAID_FILE = MODELS_DIR / "ng_models_mermaid.mmd"
+OVERVIEW_MMD_FILE = MODELS_DIR / "overview_mermaid.mmd"
 ONTOLOGIES_FILE = REPO_ROOT / "scripts" / "ontologies.json"
 
 VERSION_RE = re.compile(r"_v(\d+(?:\.\d+)*)\.tsv$")
@@ -191,7 +192,7 @@ def get_git_dates(file_path: Path) -> Tuple[str, str]:
 # Discovery
 # ---------------------------------------------------------------------------
 
-EXCLUDED_FOLDERS = {"old_samples", "heritage_object_part_types", "frame", "frame_part"}
+EXCLUDED_FOLDERS = {"old_samples", "heritage_object_part_types", "frame", "frame_part", "overview"}
 
 
 def discover_models() -> Dict[str, ModelFolder]:
@@ -1184,8 +1185,8 @@ def write_forms_outputs(folders: Dict[str, ModelFolder], raw_base: str):
 
 
 def read_mermaid_block() -> str:
-    if NG_MERMAID_FILE.exists():
-        text = NG_MERMAID_FILE.read_text(encoding="utf-8").strip()
+    if OVERVIEW_MMD_FILE.exists():
+        text = OVERVIEW_MMD_FILE.read_text(encoding="utf-8").strip()
         if text:
             return f"```mermaid\n{text}\n```\n"
     return "_Mermaid diagram not available yet._\n"
@@ -1202,7 +1203,7 @@ def write_top_readme(
 
     template = template_path.read_text(encoding="utf-8")
 
-    mermaid_block = read_mermaid_block() if ng_latest else "_Mermaid diagram not available yet._"
+    mermaid_block = read_mermaid_block()
     content = replace_auto_block(template, "NG-MODEL-VISUAL", mermaid_block)
     content = replace_auto_block(
         content, "MODEL-LIST", generate_model_list_block(folders, raw_base)

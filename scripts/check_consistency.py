@@ -43,7 +43,7 @@ REPORTS_DIR = REPO_ROOT / "reports"
 REPORT_FILE = REPORTS_DIR / "consistency_report.md"
 HIERARCHY_FILE = REPO_ROOT / "scripts" / "crm_hierarchy.json"
 
-EXCLUDED_FOLDERS = {"old_samples", "heritage_object_part_types", "frame", "frame_part"}
+EXCLUDED_FOLDERS = {"old_samples", "heritage_object_part_types", "frame", "frame_part", "overview"}
 WORKFLOW_FOLDERS = {"workflows"}
 
 VERSION_RE = re.compile(r"_v(\d+(?:\.\d+)*)\.tsv$")
