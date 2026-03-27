@@ -1,7 +1,7 @@
 # HPSWG-Models: Project State Document
  
 **Repository:** `jpadfield/HPSWG-Models`  
-**Last updated:** March 2026 (v8)  
+**Last updated:** March 2026 (v9)  
 **Purpose:** Paste this document at the start of a new Claude conversation to restore project context without re-explanation.
  
 ---
