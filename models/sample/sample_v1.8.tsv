@@ -132,7 +132,7 @@ S2: Sample Taking	O3_sampled_from (1 to 1)	E22: Heritage Object	|event
 //field E53: Storage Location | 14 | Current Permanent Location; Storage Location | behaviour:select
 //field E22: Storage Unit | 15 | Current Storage Unit; Storage Unit; Cabinet; Drawer | behaviour:select
 //field E53: Organisation or Address | 16 | Current Location; Sample Temporary Location | behaviour:select
-//field-via E55: Condition state via E3 | 17 | Sample State; Condition State; Condition | behaviour:list
+//field-via E55: Condition state via E3 | 17 | Sample State; Condition State; Condition | The current condition, treatment state, or lifecycle position of a heritage sample. | behaviour:list
 //field S27: Observation | 18 | Sample Examination Event; Sample Observation; Sample Measurement | behaviour:select
 //field E11: Sample Modification | 19 | Sample Modification Event; Sample Preparation | behaviour:select
 //field E31: Sample Documents | 20 | Related Document; Related Documents; Reports; Publications | behaviour:select
