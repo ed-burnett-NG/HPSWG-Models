@@ -66,8 +66,8 @@ E55: sample material type	tooltip	The material or substance type of the removed 
 // --- Dimensions and condition (E22: Physical Sample -- object-management layer) ---
 E22: Physical Sample	P43_has_dimension (1 to n)	E54: Sample size	|dims
 E54: Sample size	tooltip	Dimensions or size class of the sample, controlled list:<br/>micro-sample (< 0.01 m),<br/>small-sample (0.01 – 0.1 m),<br/>medium-sample (0.1 – 0.3 m),<br/>large-sample (0.3 – 1.0 m),<br/>very-large-fragment (> 1.0 m)
-E22: Physical Sample	P44_has_condition (1 to n)	E3: Condition state (Sample Status)	|period
-E3: Condition state (Sample Status)	P2_has_type (1 to 1)	E55: condition state type	|type
+E22: Physical Sample	P44_has_condition (1 to n)	E3: Condition state	|period
+E3: Condition state	P2_has_type (1 to 1)	E55: condition state type	|type
 E55: condition state type	tooltip	The current condition, treatment state, or lifecycle position of a heritage sample, reflecting analytical preparation, handling, availability, or degree of alteration over time.
 
 // --- Custody and storage (E22: Physical Sample) ---
@@ -132,7 +132,7 @@ S2: Sample Taking	O3_sampled_from (1 to 1)	E22: Heritage Object	|event
 //field E53: Storage Location | 14 | Current Permanent Location; Storage Location | behaviour:select
 //field E22: Storage Unit | 15 | Current Storage Unit; Storage Unit; Cabinet; Drawer | behaviour:select
 //field E53: Organisation or Address | 16 | Current Location; Sample Temporary Location | behaviour:select
-//field-via E3: Condition state (Sample Status) | 17 | Sample State; Condition State; Condition | behaviour:list
+//field-via E55: Condition state via E3 | 17 | Sample State; Condition State; Condition | behaviour:list
 //field S27: Observation | 18 | Sample Examination Event; Sample Observation; Sample Measurement | behaviour:select
 //field E11: Sample Modification | 19 | Sample Modification Event; Sample Preparation | behaviour:select
 //field E31: Sample Documents | 20 | Related Document; Related Documents; Reports; Publications | behaviour:select
