@@ -1,6 +1,6 @@
 # Model Consistency Report
 
-_Generated: 2026-04-10 13:10 UTC_
+_Generated: 2026-04-10 22:38 UTC_
 
 **Individual model files analysed:** 19  
 **Workflow/overview files analysed:** 1  
@@ -58,19 +58,20 @@ Multiple targets are comma-separated or joined with `or`.
 Each model's linked entities are listed with their declared target models and consistency status. Where no `//links` declaration exists, possible targets are suggested based on matching class codes.
 
 <details>
-<summary><strong>document_creation/document_creation_v1.0.tsv</strong> -- 4 confirmed</summary>
+<summary><strong>document_creation/document_creation_v1.1.tsv</strong> -- 5 confirmed</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
 | `E31: Document` | `E31` | `simple_document` → `E31: Simple Document` | ✅ Consistent |
 | `E31: Influenced By` | `E31` | `simple_document` → `E31: Simple Document` | ✅ Consistent |
+| `E31: Previous Version` | `E31` | `simple_document` → `E31: Simple Document` | ✅ Consistent |
 | `E39: Author` | `E39` | `person` → `E21: Person` | ✅ Consistent (confirmed hierarchy match) |
 |  |  | `organisation` → `E74: Organisation` | ✅ Consistent (confirmed hierarchy match) |
 
 </details>
 
 <details>
-<summary><strong>document_update/document_update_v0.1.tsv</strong> -- 3 confirmed</summary>
+<summary><strong>document_update/document_update_v1.0.tsv</strong> -- 3 confirmed</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
@@ -307,7 +308,7 @@ Each model's linked entities are listed with their declared target models and co
 </details>
 
 <details>
-<summary><strong>simple_document/simple_document_v1.1.tsv</strong> -- 5 confirmed</summary>
+<summary><strong>simple_document/simple_document_v1.2.tsv</strong> -- 6 confirmed</summary>
 
 | Linked entity | Class code | Declared target(s) | Status |
 | --- | --- | --- | --- |
@@ -316,6 +317,7 @@ Each model's linked entities are listed with their declared target models and co
 | `E13: Document Update` | `E13` | `document_update` → `E13: Document Update` | ✅ Consistent |
 | `EX_Digital_Image: Incorporated Image` | `EX_Digital_Image` | `rs:EX_Digital_Image` (ontology) | 📖 Ontology reference -- follows standard CRM structure |
 | `E31: Simple Document (Part)` | `E31` | `simple_document` → `E31: Simple Document` | ✅ Consistent |
+| `E31: Alternative Version` | `E31` | `simple_document` → `E31: Simple Document` | ✅ Consistent |
 
 </details>
 

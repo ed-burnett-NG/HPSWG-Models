@@ -19,7 +19,7 @@ institutions. Additional collaborators will be acknowledged as models continue t
 ## Visual Overview of All Models
 
 <!-- BEGIN AUTO: NG-MODEL-VISUAL -->
-[Open in Dynamic Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/overview/overview_v1.5.tsv)
+[Open in Dynamic Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/overview/overview_v1.6.tsv)
 
 ```mermaid
 %%{init: {'flowchart': {'wrappingWidth': 600}}}%%
@@ -99,6 +99,7 @@ classDef classstyle stroke:black,fill:white,color:black,rx:5px,ry:5px;
 
   document_creation ---->|"E31: Document"|simple_document
   document_creation ---->|"E31: Influenced By"|simple_document
+  document_creation ---->|"E31: Previous Version"|simple_document
   document_creation ---->|"E39: Author"|person
   document_creation ---->|"E39: Author"|organisation
   document_update ---->|"E31: Document"|simple_document
@@ -216,6 +217,7 @@ classDef classstyle stroke:black,fill:white,color:black,rx:5px,ry:5px;
   simple_document ---->|"E13: Document Update"|document_update
   simple_document ---->|"EX_Digital_Image: Incorporated Image"|rs_EX_Digital_Image
   simple_document ---->|"E31: Simple Document (Part)"|simple_document
+  simple_document ---->|"E31: Alternative Version"|simple_document
 ```
 <!-- END AUTO: NG-MODEL-VISUAL -->
 
@@ -250,8 +252,8 @@ Individual CIDOC CRM domain models, each covering a specific aspect of heritage 
 
 | Name | Type / Status | Folder | Latest TSV | Visualisation |
 |------|--------------|--------|-----------|---------------|
-| Document creation | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/document_creation`](models/document_creation/) | [v1.0](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/document_creation/document_creation_v1.0.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/document_creation/document_creation_v1.0.tsv) |
-| Document update | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/document_update`](models/document_update/) | [v0.1](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/document_update/document_update_v0.1.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/document_update/document_update_v0.1.tsv) |
+| Document creation | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/document_creation`](models/document_creation/) | [v1.1](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/document_creation/document_creation_v1.1.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/document_creation/document_creation_v1.1.tsv) |
+| Document update | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/document_update`](models/document_update/) | [v1.0](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/document_update/document_update_v1.0.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/document_update/document_update_v1.0.tsv) |
 | Heritage object | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/heritage_object`](models/heritage_object/) | [v1.8](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/heritage_object/heritage_object_v1.8.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/heritage_object/heritage_object_v1.8.tsv) |
 | Heritage object component | ![Status: Precursor](https://img.shields.io/badge/status-precursor-orange) | [`models/heritage_object_component`](models/heritage_object_component/) | _Precursor files only_ | -- |
 | Heritage object image | ![Status: Precursor](https://img.shields.io/badge/status-precursor-orange) | [`models/heritage_object_image`](models/heritage_object_image/) | _Precursor files only_ | -- |
@@ -275,7 +277,7 @@ Individual CIDOC CRM domain models, each covering a specific aspect of heritage 
 | Sample storage unit | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/sample_storage_unit`](models/sample_storage_unit/) | [v1.1](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample_storage_unit/sample_storage_unit_v1.1.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample_storage_unit/sample_storage_unit_v1.1.tsv) |
 | Sample taking | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/sample_taking`](models/sample_taking/) | [v1.7](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample_taking/sample_taking_v1.7.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample_taking/sample_taking_v1.7.tsv) |
 | Sampling activity | ![Status: Formed](https://img.shields.io/badge/status-formed-brightgreen) | [`models/sampling_activity`](models/sampling_activity/) | [v1.2](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sampling_activity/sampling_activity_v1.2.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sampling_activity/sampling_activity_v1.2.tsv) |
-| Simple document | ![Status: Mixed](https://img.shields.io/badge/status-mixed-yellow) | [`models/simple_document`](models/simple_document/) | [v1.1](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.1.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.1.tsv) |
+| Simple document | ![Status: Mixed](https://img.shields.io/badge/status-mixed-yellow) | [`models/simple_document`](models/simple_document/) | [v1.2](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.2.tsv) | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.2.tsv) |
 | Timespan | ![Status: Precursor](https://img.shields.io/badge/status-precursor-orange) | [`models/timespan`](models/timespan/) | _Precursor files only_ | -- |
 <!-- END AUTO: MODEL-LIST -->
 
