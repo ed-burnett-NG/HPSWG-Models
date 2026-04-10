@@ -7,7 +7,7 @@ Document Note: Document Update Model Overview	tooltip	This model captures the pr
 E31: Document	tooltip	The document that was updated. Links back to the simple_document model.	document-fs24|
 //links E31: Document --> simple_document
 E39: Editor	tooltip	The person or organisation who carried out this update.	actor-fs24|
-//links E39: Editor --> person, organisation
+//links E39: Editor --> person, organisation [confirmed]
 //end sg1
 
 E13: Document Update	P1_is_identified_by (1 to 1)	E41: Unique System Label or ID	|name

@@ -9,7 +9,7 @@ E31: Document	tooltip	The document that was created. Links back to the simple_do
 E31: Influenced By	tooltip	An optional existing document that influenced the creation of this document.	document-fs24|
 //links E31: Influenced By --> simple_document
 E39: Author	tooltip	The person or organisation who authored this document.	actor-fs24|
-//links E39: Author --> person, organisation
+//links E39: Author --> person, organisation [confirmed]
 //end sg1
 
 E65: Document Creation	P1_is_identified_by (1 to 1)	E41: Unique System Label or ID	|name

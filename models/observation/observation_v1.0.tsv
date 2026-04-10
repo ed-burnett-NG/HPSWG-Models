@@ -5,7 +5,7 @@ Document Note: Observation Model Overview	tooltip	This model records a scientifi
 
 //subgraph Linked Entities
 S15: Observed Entity	tooltip	The entity or entities this observation relates to. Can be a heritage object, sample, examination event, or any other CRM entity.	object-fs24|
-//links E1: Observed Entity --> crm:E1
+//links S15: Observed Entity --> crmsci:S15
 E39: Institution or Person	tooltip	The actor (individual or organisation) responsible for carrying out or authorising the observation.	actor-fs24|
 //links E39: Institution or Person --> person, organisation [confirmed]
 E53: Location	tooltip	The place where the observation occurred (e.g., laboratory, examination room, imaging suite).	place-fs24|
