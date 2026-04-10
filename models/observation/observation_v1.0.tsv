@@ -1,0 +1,67 @@
+//flowchart LR
+S27: Observation	tooltip	A scientific or technical observation or examination of a physical thing in which one or more properties are investigated to gain knowledge. Covers the full range of scientific examination from visual inspection through to instrumental analysis. May produce simple recorded findings, complex data outputs, or images. S27 is the superclass of S21: Measurement (E16); quantitative measurement events should use the dedicated Measurement model.	event-fs32|
+S27: Observation	has note	Document Note: Observation Model Overview
+Document Note: Observation Model Overview	tooltip	This model records a scientific or technical examination event. It captures identification, description, event typing, responsible actors, time and place, the entity observed, the property type examined, methods and protocols followed, equipment employed, and the outputs produced. Outputs may include images (EX_Digital_Image), digital data objects such as spectra or datasets (D1: Digital Object), and documentary records (E73: Observation Record). Interpretation of results and knowledge creation derived from outputs are out of scope here.
+
+//subgraph Linked Entities
+S15: Observed Entity	tooltip	The entity or entities this observation relates to. Can be a heritage object, sample, examination event, or any other CRM entity.	object-fs24|
+//links E1: Observed Entity --> crm:E1
+E39: Institution or Person	tooltip	The actor (individual or organisation) responsible for carrying out or authorising the observation.	actor-fs24|
+//links E39: Institution or Person --> person, organisation [confirmed]
+E53: Location	tooltip	The place where the observation occurred (e.g., laboratory, examination room, imaging suite).	place-fs24|
+//links E53: Location --> location
+E31: Report or Document	tooltip	Documents that describe or evidence the observation (e.g., examination reports, condition reports, analytical notes).	document-fs24|
+//links E31: Report or Document --> crm:E31
+E29: Method / Protocol	tooltip	A defined method or protocol followed during the observation or examination activity, referencing relevant techniques and where required this document would describe the use and setup of any specific tools or equipment. (e.g., a standard examination procedure or analytical protocol).	document-fs24|
+//links E29: Method / Protocol --> crm:E29
+D1: Digital Result	tooltip	A digital data output produced by the observation event,  such as a images, spectrum, elemental map, or dataset.	digital2-fs24|
+//links D1: Digital Result --> data_set
+E26: Area of Interest	tooltip	This optional field to link to a definition of a specific area/place/feature on an the observed thing (Heritage Object, Sample, etc).	place-fs24|
+//links E26: Area of Interest --> crm:E26
+//end sg1
+
+// Identification & description
+S27: Observation	P48_has_preferred_identifier (1 to 1)	E42: Persistent Identifier (PID)	|url
+E42: Persistent Identifier (PID)	P2_has_type (1 to 1)	aat:300387580
+S27: Observation	P1_is_identified_by (1 to 1)	E41: Unique System Label or ID	|name
+E41: Unique System Label or ID	tooltip	Required within some documentation or database systems, such as ResearchSpace required label.
+E41: Unique System Label or ID	has note	Automatic: Preferred TBC
+S27: Observation	P67i_is_referred_to_by (0 to n)	E73: Observation comment	|literal
+E73: Observation comment	P45i_is_incorporated_in (0 to n)	E31: Report or Document
+
+S27: Observation	P17_was_motivated_by (0 to 1)	E73: Reason for Observation	|literal
+E73: Reason for Observation	tooltip	The overall motivation for carrying out the Observation. This describes the research, conservation, or technical question being addressed.
+E73: Reason for Observation	P45i_is incorporated in (0 to n)	E31: Report or Document	|document
+
+// Typing	evidence	and protocol
+S27: Observation	P2_has_type (1 to n)	E55: observation type	|type
+E55: observation type	tooltip	A controlled type/category for the observation (e.g., visual examination, optical microscopy, X-ray fluorescence, infrared reflectography, UV fluorescence, SEM-EDX, Raman spectroscopy).
+S27: Observation	P70i_is_documented_in (0 to n)	E31: Report or Document
+S27: Observation	P33_used_specific_technique (0 to n)	E29: Method / Protocol
+
+// Core event relations
+S27: Observation	O35_observed_entity (1 to 1)	S15: Observed Entity
+S27: Observation	O35_observed_entity (0 to 1)	E26: Area of Interest
+S27: Observation	O36_observed_property_type (0 to n)	E55: observed property type	|type
+E55: observed property type	tooltip	The type of property being investigated (e.g., colour, fluorescence response, surface morphology, elemental composition, layer structure, molecular composition).
+S27: Observation	P14_carried_out_by (1 to n)	E39: Institution or Person
+S27: Observation	P7_took_place_at (0 to 1)	E53: Location
+S27: Observation	P4_has_time-span (0 to 1)	E52: Observation Date	|period
+E52: Observation Date	tooltip	The timespan during which the observation occurred.
+
+// Outputs
+// Digital data objects -- spectra	datasets	maps	and other non-image analytical outputs (CRMdig D1)
+S27: Observation	P94_has_created (0 to n)	D1: Digital Result
+D1: Digital Result	P2_has_type (1 to 1)	E55: result type	|type
+E55: result type	tooltip	The type of data output produced (e.g., Images, XRF spectrum, Raman spectrum, EDS map, FTIR spectrum, XRD pattern, numerical dataset).
+
+// Documentary record -- examination notes	analytical summaries	condition observations
+S27: Observation	P94_has_created (0 to n)	E73: Observation Record	|literal
+E73: Observation Record	tooltip	A textual or structured documentary record produced by the observation event, such as examination notes, an analytical summary, or a condition observation report.
+E73: Observation Record	P70i_is_documented_in (0 to n)	E31: Report or Document
+
+
+// Note: S27: Observation is the superclass of S21: Measurement (E16: Measurement). Where quantitative
+// property values are recorded use the dedicated Measurement model in addition to or instead of this model.
+// Note: if the observation involves any material alteration of the sample, record a concurrent
+// E11: Sample Modification event.

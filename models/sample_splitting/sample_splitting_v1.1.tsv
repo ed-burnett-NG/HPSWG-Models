@@ -1,0 +1,84 @@
+//flowchart LR
+S24: Sample Splitting	tooltip	The event in which an existing material sample is physically divided, producing one or more new sub-samples. The source sample is diminished by the act; each new sub-sample is a full sample entity in its own right.	event-fs32|
+S24: Sample Splitting	has note	Document Note: Sample Splitting Model Overview
+Document Note: Sample Splitting Model Overview	tooltip	This model defines a Sample Splitting event (S24), representing the physical act of dividing an existing sample to produce one or more new sub-samples. It captures the source sample, the sub-samples produced, responsible actors, date, location, method, and documentary evidence. The source sample is diminished by the event; each sub-sample produced becomes an independent sample with its own full record. The dual-layer structure (E22: Physical Sample and S13: Material Sample) is carried through from source to sub-samples.
+
+//subgraph Linked Entities
+//subgraph E22/S13: Source Sample
+E22: Physical Sample	tooltip	The curated physical artefact being split. The E22 is diminished by the splitting event.	object_bn-fs24|
+S13: Material Sample	tooltip	The material sample being split. The S13 is the CRMsci source of the split via O27.	object_bn-fs24|
+//end sg2-10-10
+//links E22/S13: Source Sample --> sample
+
+//subgraph E22/S13: Sub-Sample
+E22: Physical Sample#-1	tooltip	A new curated Physical Sample created as a result of the splitting event, with its own persistent identity, storage, condition, and lifecycle records.	object_bn-fs24|
+S13: Material Sample#-1	tooltip	The new material sample produced by the splitting event. Although shown here only in relation to the splitting activity, this sub-sample is a full S13 entity and may independently be observed, measured, modified, and further split.	object_bn-fs24|
+//end sg2-10-10
+//links E22/S13: Sub-Sample --> sample
+
+E39: Undertaken by	tooltip	The actor (individual or organisation) responsible for carrying out or authorising the splitting activity.	actor-fs24|
+//links E39: Undertaken by --> person, organisation [confirmed]
+E53: Location	tooltip	The physical place where the splitting event occurred (e.g., laboratory, conservation studio).	place-fs24|
+//links E53: Location --> location
+E31: Report or Document	tooltip	Any document recording the splitting event, such as treatment notes, laboratory records, or sample management reports.	document-fs24|
+//links E31: Report or Document --> crm:E31
+E29: Method or Procedure	tooltip	A defined method or protocol followed during the splitting activity, referencing relevant techniques and where required this document would describe the use and setup of any specific tools or equipment.	document-fs24|
+//links E29: Method or Procedure --> crm:E29
+//end sg1
+
+// Identification & description
+S24: Sample Splitting	P48_has_preferred_identifier (0 to 1)	E42: Persistent Identifier (UUID)	|url
+S24: Sample Splitting	P1_is_identified_by (1 to 1)	E41: Unique System Label or ID	|name
+E41: Unique System Label or ID	tooltip	Required within some documentation or database systems, such as ResearchSpace required label.
+E41: Unique System Label or ID	has note	Automatic: Preferred TBC
+S24: Sample Splitting	P67i_is_referred_to_by (0 to n)	E73: Sample Splitting Comment	|literal
+E73: Sample Splitting Comment	tooltip	A general comment or brief factual description of the splitting event, including any notable aspects of how the event went.
+E73: Sample Splitting Comment	P45i_is_incorporated_in (0 to n)	E31: Report or Document
+S24: Sample Splitting	P70i_is_documented_in (0 to n)	E31: Report or Document
+
+S24: Sample Splitting	P17_was_motivated_by (0 to 1)	E73: Reason for Sample Splitting	|literal
+E73: Reason for Sample Splitting	tooltip	The overall motivation for carrying out the sample splitting. This describes the research, conservation, or technical question being addressed.
+E73: Reason for Sample Splitting	P45i_is incorporated in (0 to n)	E31: Report or Document	|document
+
+// Typing and method
+S24: Sample Splitting	P2_has_type (0 to n)	E55: splitting type	|type
+E55: splitting type	tooltip	A controlled type or category for the splitting activity (e.g., manual division, micro-sampling, laser ablation).
+S24: Sample Splitting	P33_used_specific_technique (0 to n)	E29: Method or Procedure
+
+// Core event relations
+S24: Sample Splitting	P14_carried_out_by (1 to n)	E39: Undertaken by
+S24: Sample Splitting	P7_took_place_at (0 to 1)	E53: Location
+S24: Sample Splitting	P4_has_time-span (0 to 1)	E52: Splitting Date	|period
+E52: Splitting Date	tooltip	The timespan during which the splitting event occurred.
+
+// Source sample connections
+S24: Sample Splitting	O27_split (1 to 1)	E22/S13: Source Sample
+S13: Material Sample	O1i_was_diminished_by (1 to 1)	S24: Sample Splitting
+
+// Sub-sample connections
+S24: Sample Splitting	O29_removed_sub-sample (1 to n)	E22/S13: Sub-Sample
+S24: Sample Splitting	P108_has_produced (1 to n)	E22: Physical Sample#-1
+
+// Dual-layer internal connections
+E22: Physical Sample	P46_is_composed_of (1 to n)	S13: Material Sample	|object
+S13: Material Sample	P46i_forms_part_of (1 to 1)	E22: Physical Sample
+E22: Physical Sample#-1	P46_is_composed_of (1 to n)	S13: Material Sample#-1	|object
+S13: Material Sample#-1	P46i_forms_part_of (1 to 1)	E22: Physical Sample#-1
+
+// Resulting state (recommended)
+S24: Sample Splitting	P141_assigned (0 to n)	E13: Attribute Assignment	|event
+E13: Attribute Assignment	tooltip	This process mimics the process of updating the sample format in a Sample Modification as as well as creating the new sub sample this process will also modify the source sample.
+E13: Attribute Assignment	P140_assigned_attribute_to	E22/S13: Source Sample
+E13: Attribute Assignment	P177_assigned_property_type	E55: sample attribute current format	|type
+E13: Attribute Assignment	P141_assigned (0 to 1)	E55: current sample format	|type
+
+// Status as Condition State (recommended)
+S24: Sample Splitting	P141_assigned (0 to n)	E13: Attribute Assignment#-1	|event
+E13: Attribute Assignment#-1	tooltip	This process mimics the process of updating the sample state in a Sample Modification as as well as creating the new sub sample this process will also modify the source sample.
+E13: Attribute Assignment#-1	P140_assigned_attribute_to	E22/S13: Source Sample
+E13: Attribute Assignment#-1	P177_assigned_property_type	E55: sample attribute current status	|type
+E13: Attribute Assignment#-1	P141_assigned (0 to 1)	E3: Current Condition State	|period
+E3: Current Condition State	P2_has_type (1 to n)	E55: sample status	|type
+
+// Note: each sub-sample produced becomes an independent sample entity with its own full record.
+// Use the Sample model for identifiers	storage	custody	condition

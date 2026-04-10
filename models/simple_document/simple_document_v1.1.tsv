@@ -7,8 +7,11 @@ Document Note: Simple Document Model Overview	tooltip	This model defines a reusa
 E1: Documented Entity	tooltip	The entity or entities this document is about. Can be a heritage object, sample, examination event, or any other CRM entity. One document may document multiple entities.	object-fs24|
 //links E1: Documented Entity --> crm:E1
 
-E65: Document Contribution	tooltip	The creation event for this document, spanning the earliest to latest edit dates across all contributors.	event-fs24|
-//links E65: Document Contribution --> document_provenance
+E65: Document Creation	tooltip	The creation event for this document.	event-fs24|
+//links E65: Document Creation --> document_creation
+
+E13: Document Update	tooltip	TBC.	event-fs24|
+//links E65: Document Update --> document_update
 
 EX_Digital_Image: Incorporated Image	tooltip	An image directly incorporated into this document. For figure-type documents this is the primary content. For other document types images may be incorporated alongside text.	digital2-fs24|
 //links EX_Digital_Image: Incorporated Image --> rs:EX_Digital_Image
@@ -36,11 +39,12 @@ E31: Simple Document	P190_has_symbolic_content (0 to 1)	E73: Document Text
 E31: Simple Document	P2_has_type (1 to 1)	E55: Document Type
 E31: Simple Document	P2_has_type (0 to 1)	E55: Domain Type
 E31: Simple Document	P70_documents (1 to n)	E1: Documented Entity
-E31: Simple Document	P94i_was_created_by (0 to 1)	E65: Document Contribution
+E31: Simple Document	P94i_was_created_by (1 to 1)	E65: Document Creation
+E31: Simple Document	P140i_was_attributed_by (0 to 1)	E13: Document Update
 E31: Simple Document	P165_incorporates (0 to n)	EX_Digital_Image: Incorporated Image
 E31: Simple Document	P148_has_component (0 to n)	E31: Simple Document (Part)
 
-E13: Attribute Assignment	P140_assigned_attribute_to (1 to 1)	E31: Simple Document (Part)	event|
+E13: Attribute Assignment	P140_assigned_attribute_to (1 to 1)	E31: Simple Document (Part)	event_bn|
 E13: Attribute Assignment	P141_assigned (1 to 1)	E54: Part Order
 E13: Attribute Assignment	P16_used_specific_object (1 to 1)	E31: Simple Document
 //E54: Part Order	P90_has_value (1 to 1)	"X"	|literal - this is where the actual value would be connected in
