@@ -1,0 +1,27 @@
+//flowchart LR
+E13: Document Update	tooltip	An attribute assignment event recording an update to an existing document. Records the editor, the scale of the update, the timespan of the update, and the text content after the update.	event-fs32|
+E13: Document Update	has note	Document Note: Document Update Model Overview
+Document Note: Document Update Model Overview	tooltip	This model captures the provenance of document updates. Each update event records the editor responsible, the scale of their involvement, the timespan of their activity, and the resulting text content. The P190 value on the document entity reflects the current text; the accumulation of E13 update events in the graph preserves the full editorial history. The model is intentionally source-agnostic; wiki edits, CMS updates, and manual revisions all map to the same structure.
+
+//subgraph Linked Entities
+E31: Document	tooltip	The document that was updated. Links back to the simple_document model.	document-fs24|
+//links E31: Document --> simple_document
+E39: Editor	tooltip	The person or organisation who carried out this update.	actor-fs24|
+//links E39: Editor --> person, organisation
+//end sg1
+
+E13: Document Update	P1_is_identified_by (1 to 1)	E41: Unique System Label or ID	|name
+E41: Unique System Label or ID	tooltip	Required within some documentation or database systems, such as ResearchSpace required label.
+E55: Contribution Type	tooltip	The scale of this editor's involvement. Selected from a controlled list: initial_contribution, major_contribution, minor_contribution, micro_contribution, final_contribution.	type|
+E55: Updated Property Type	tooltip	A fixed type indicating the property being updated by this attribute assignment. Fixed value: P190_has_symbolic_content. Indicates that this update assigns new symbolic content to the target document.	type|
+E52: Update Timespan	tooltip	The timespan of this editor's activity on the document, from the earliest to latest recorded edit.	period-fs24|
+E73: Updated Text	tooltip	The text content of the document after this update. The P190 value on the document entity will reflect the most recent update; earlier text states are recoverable via the sequence of E13 update events and their associated E73 nodes.	literal|
+
+E13: Document Update	P140_assigned_attribute_to (1 to 1)	E31: Document	|document
+E13: Document Update	P177_assigned_property_type (1 to 1)	E55: Updated Property Type	|type
+E13: Document Update	P2_has_type (1 to 1)	E55: Contribution Type	|type
+E13: Document Update	P14_carried_out_by (1 to 1)	E39: Editor	|actor
+E13: Document Update	P141_assigned (1 to 1)	E73: Updated Text	|literal
+E13: Document Update	P4_has_time-span (1 to 1)	E52: Update Timespan
+E52: Update Timespan	P82a_begin_of_the_begin (1 to 1)	Earliest Update	|literal
+E52: Update Timespan	P82b_end_of_the_end (1 to 1)	Latest Update	|literal

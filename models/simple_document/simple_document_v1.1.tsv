@@ -1,0 +1,52 @@
+//flowchart LR
+E31: Simple Document	tooltip	A document that records information about one or more entities. Can contain free text, incorporate images, and be composed of ordered parts. Parts are themselves simple_document instances, allowing figures, sections, and composite reports to be modelled within the same structure. Document type distinguishes structural role (e.g. figure, working note, report section); domain type distinguishes subject matter (e.g. x-radiography, provenance).	document-fs32|
+E31: Simple Document	has note	Document Note: Simple Document Model Overview
+Document Note: Simple Document Model Overview	tooltip	This model defines a reusable document entity that can represent anything from a single figure caption to a multi-section technical report. A document can incorporate images directly and can be composed of ordered part-documents. Contribution provenance is captured via the document_contribution model. The model is intentionally generic; source-specific typing and content are applied through the domain type and document type controlled lists.
+
+//subgraph Linked Entities
+E1: Documented Entity	tooltip	The entity or entities this document is about. Can be a heritage object, sample, examination event, or any other CRM entity. One document may document multiple entities.	object-fs24|
+//links E1: Documented Entity --> crm:E1
+
+E65: Document Contribution	tooltip	The creation event for this document, spanning the earliest to latest edit dates across all contributors.	event-fs24|
+//links E65: Document Contribution --> document_provenance
+
+EX_Digital_Image: Incorporated Image	tooltip	An image directly incorporated into this document. For figure-type documents this is the primary content. For other document types images may be incorporated alongside text.	digital2-fs24|
+//links EX_Digital_Image: Incorporated Image --> rs:EX_Digital_Image
+
+E31: Simple Document (Part)	tooltip	An ordered part of this document. Parts are themselves simple_document instances. A figure part incorporates an image and carries a caption as its document text. Parts may have their own creation provenance and type.	document-fs24|
+//links E31: Simple Document (Part) --> simple_document
+
+//end sg1
+
+E31: Simple Document	P1_is_identified_by (1 to 1)	E41: Unique System Label or ID	|name
+E41: Unique System Label or ID	tooltip	Required within some documentation or database systems, such as ResearchSpace required label.
+
+E41: Document Title	tooltip	The display label or title of the document.	name|
+
+E73: Document Text	tooltip	The textual content of the document. For figure parts this carries the caption. May be absent for purely structural container documents.	literal|
+
+E55: Document Type	tooltip	The structural role of this document. Selected from a controlled list: working_note, report_section, figure, composite_report, catalogue_entry.	type|
+
+E55: Domain Type	tooltip	The subject domain of this document. Selected from a controlled list: e.g. x-radiography, infrared_reflectography, entry_text, provenance, condition, treatment, support, paint_layers, surface_coatings, bibliography, organic_analysis, cross_section.	type|
+
+E54: Part Order	tooltip	A dimension node representing the ordinal position of this part within its parent document. The numeric value is not stored directly on this node; a separate literal structure would be required to record it. The parent document context is captured via the associated E13 Attribute Assignment using P16.	dims|
+
+E31: Simple Document	P1_is_identified_by (1 to 1)	E41: Document Title
+E31: Simple Document	P190_has_symbolic_content (0 to 1)	E73: Document Text
+E31: Simple Document	P2_has_type (1 to 1)	E55: Document Type
+E31: Simple Document	P2_has_type (0 to 1)	E55: Domain Type
+E31: Simple Document	P70_documents (1 to n)	E1: Documented Entity
+E31: Simple Document	P94i_was_created_by (0 to 1)	E65: Document Contribution
+E31: Simple Document	P165_incorporates (0 to n)	EX_Digital_Image: Incorporated Image
+E31: Simple Document	P148_has_component (0 to n)	E31: Simple Document (Part)
+
+E13: Attribute Assignment	P140_assigned_attribute_to (1 to 1)	E31: Simple Document (Part)	event|
+E13: Attribute Assignment	P141_assigned (1 to 1)	E54: Part Order
+E13: Attribute Assignment	P16_used_specific_object (1 to 1)	E31: Simple Document
+//E54: Part Order	P90_has_value (1 to 1)	"X"	|literal - this is where the actual value would be connected in
+
+E54: Part Order	P2_has_type (1 to 1)	E55: Ordinal Position Type	|type
+E13: Attribute Assignment	P177_assigned_property_type (1 to 1)	E55: Ordering Property Type	|type
+
+E55: Ordinal Position Type	tooltip	A type node indicating the kind of dimension recorded by this E54 node. Fixed value: "ordinal position". Distinguishes this dimension from physical or temporal measurements.
+E55: Ordering Property Type	tooltip	A type node indicating the nature of this attribute assignment. Fixed value: "order within document". Indicates that the E13 Attribute Assignment is recording the ordinal position of a part within a specific parent document.

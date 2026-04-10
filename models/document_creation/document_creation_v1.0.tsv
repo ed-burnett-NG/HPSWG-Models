@@ -1,0 +1,28 @@
+//flowchart LR
+E65: Document Creation	tooltip	The creation event for a document. Records the author, the timespan of creation, and the initial text content. May be influenced by existing documents.	event-fs32|
+E65: Document Creation	has note	Document Note: Document Creation Model Overview
+Document Note: Document Creation Model Overview	tooltip	This model captures the provenance of document creation. The E65 creation event records the author and timespan, and creates both the document entity and its initial text content. An optional influence link allows source or reference documents to be recorded. The model is intentionally source-agnostic; wiki page creation, CMS authoring, and manual attribution all map to the same structure.
+
+//subgraph Linked Entities
+E31: Document	tooltip	The document that was created. Links back to the simple_document model.	document-fs24|
+//links E31: Document --> simple_document
+E31: Influenced By	tooltip	An optional existing document that influenced the creation of this document.	document-fs24|
+//links E31: Influenced By --> simple_document
+E39: Author	tooltip	The person or organisation who authored this document.	actor-fs24|
+//links E39: Author --> person, organisation
+//end sg1
+
+E65: Document Creation	P1_is_identified_by (1 to 1)	E41: Unique System Label or ID	|name
+E41: Unique System Label or ID	tooltip	Required within some documentation or database systems, such as ResearchSpace required label.
+E55: Contribution Type	tooltip	The scale of this author's involvement. Selected from a controlled list: initial_contribution, major_contribution, minor_contribution, micro_contribution, final_contribution.	type|
+E52: Creation Timespan	tooltip	The timespan of this author's activity on the document, from the earliest to latest recorded edit or contribution.	period-fs24|
+E73: Initial Text	tooltip	The initial text content of the document at the point of creation. Preserving this separately ensures the original content remains recoverable even after subsequent updates via the document_update model.	literal|
+
+E65: Document Creation	P94_created (1 to 1)	E31: Document	|document
+E65: Document Creation	P15_was_influenced_by (0 to n)	E31: Influenced By
+E65: Document Creation	P14_carried_out_by (1 to 1)	E39: Author	|actor
+E65: Document Creation	P2_has_type (1 to 1)	E55: Contribution Type	|type
+E65: Document Creation	P4_has_time-span (1 to 1)	E52: Creation Timespan
+E65: Document Creation	P94_created (0 to 1)	E73: Initial Text	|document
+E52: Creation Timespan	P82a_begin_of_the_begin (1 to 1)	Earliest Creation	|literal
+E52: Creation Timespan	P82b_end_of_the_end (1 to 1)	Latest Creation	|literal
