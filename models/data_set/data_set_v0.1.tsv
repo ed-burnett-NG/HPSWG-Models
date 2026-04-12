@@ -5,7 +5,7 @@ Document Note: Data Set Model Overview	tooltip	This model records a digital data
 
 //subgraph Linked Entities
 S27: Observation Event	tooltip	The observation or examination event that produced this dataset. Provides upstream provenance linking the dataset to the observed entity, the responsible actors, and the equipment and methods employed.	event-fs24|
-//links S27: Observation Event --> sample_observation
+//links S27: Observation Event --> observation
 E39: Rights Holder	tooltip	The person or organisation that holds rights over this dataset. Multiple rights holders are permitted to accommodate collaborative or jointly-owned resources.	actor-fs24|
 //links E39: Rights Holder --> person, organisation [confirmed]
 E29: Method / Protocol	tooltip	The method or protocol document describing the procedure used to produce this dataset. Provides fuller procedural detail beyond the technique type classification recorded on the dataset itself.	document-fs24|
