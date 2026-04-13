@@ -61,3 +61,16 @@ E21: Person	P74_has_current_or_former_residence (0 to n)	E53: Place (Residence)	
 E21: Person	P14i_performed (0 to n)	E7: Area of Work	|event_bn
 E7: Area of Work	tooltip	This 'area of work' can be a simple or complex event, it purpose here is to provide a mechanism to record simple specialities of research discipline as person has experience in or is known for. For professional field(s) or domain(s) of practice, use controlled terms e.g.: paintings conservation, heritage science, analytical chemistry.
 E7: Area of Work	P2_has_type (1 to n)	E55: Research Discipline	|type
+
+
+
+//field E42: Persistent Identifier (PID) | 1 | External ID; Persistent Identifier (PID) | behaviour:pid
+//field E41: Unique System Label or ID | 2 | System Label or ID; Database or System ID/Label | behaviour:system-id
+//field E41: Given Name | 3 | Given Name; First Name | behaviour:free-text
+//field E41: Family Name | 4 | Family Name; Surname | behaviour:free-text
+//field E41: Honorific / Title | 5 | Honorific / Title | behaviour:list
+//field E73: Description Text | 6 | Person Description | behaviour:free-text
+//field E53: Place (Residence) | 7 | Residence of Person | behaviour:select
+//field E74: Organisation (Affiliation) | 8 | Affiliated Organisation | behaviour:select
+//field E52: Birth Date | 9 | Date of Birth; Year Born | behaviour:free-text
+//field E52: Death Date | 10 | Date of Death; Year Died | behaviour:free-text
