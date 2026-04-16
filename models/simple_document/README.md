@@ -18,12 +18,12 @@ See [`ONTOLOGIES.md`](../ONTOLOGIES.md) for full version details, source links, 
 ## Model versions
 
 <details>
-<summary><strong>Simple document</strong>: latest version <a href="https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.2.tsv">v1.2</a></summary>
+<summary><strong>Simple document</strong>: latest version <a href="https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.2.tsv">v1.2</a></summary>
 
 | | Version | Created | Last modified | Open in Modeller |
 | :---: | :---: | :---: | :---: | --- |
-| :heavy_check_mark: | v1.2 | 2026-04-10 | 2026-04-10 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.2.tsv) |
-|  | v1.1 | 2026-04-10 | 2026-04-10 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.1.tsv) |
+| :heavy_check_mark: | v1.2 | 2026-04-10 | 2026-04-10 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.2.tsv) |
+|  | v1.1 | 2026-04-10 | 2026-04-10 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_v1.1.tsv) |
 
 </details>
 
@@ -33,7 +33,7 @@ See [`ONTOLOGIES.md`](../ONTOLOGIES.md) for full version details, source links, 
 
 | File | Raw link |
 |------|----------|
-| `simple_document_precursor_v1.0.txt` | [View raw](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_precursor_v1.0.txt) |
+| `simple_document_precursor_v1.0.txt` | [View raw](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/simple_document/simple_document_precursor_v1.0.txt) |
 
 ## Contributing
 

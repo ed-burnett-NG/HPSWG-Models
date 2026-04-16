@@ -6,7 +6,7 @@ Each section below corresponds to a model that contains `//field` or `//field-vi
 
 ### Annotation image
 
-[`models/annotation_image`](../models/annotation_image/) | [v0.1](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv)
+[`models/annotation_image`](../models/annotation_image/) | [v0.1](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv)
 
 This model records a digital image used as an annotation base. It captures identification, image metadata, capture provenance, rights, annotation group classification, and links to the heritage object depicted. The image may also be linked optionally to a dataset record where it forms part of a formal analytical output. Annotation of the image itself -- the spatial recording of sample sites, areas of interest, and examination positions -- is handled in the annotation_image workflow and related models, not here.
 
@@ -43,7 +43,7 @@ _\* Required status could not be derived from the model and has been set to requ
 
 ### Data set
 
-[`models/data_set`](../models/data_set/) | [v0.1](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/data_set/data_set_v0.1.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/data_set/data_set_v0.1.tsv)
+[`models/data_set`](../models/data_set/) | [v0.1](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/data_set/data_set_v0.1.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/data_set/data_set_v0.1.tsv)
 
 This model records a digital dataset produced by a heritage science observation event. It captures identification, description, dataset typing, rights and access conditions, version information, and links to constituent file records or file groups. Links back to the generating observation event and optionally to a method or protocol document. Raw-to-processed dataset relationships are not modelled here; these will be handled by a future data_processing event model or resolved at the digital_file level.
 
@@ -75,7 +75,7 @@ _\* Required status could not be derived from the model and has been set to requ
 
 ### Heritage object
 
-[`models/heritage_object`](../models/heritage_object/) | [v1.8](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/heritage_object/heritage_object_v1.8.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/heritage_object/heritage_object_v1.8.tsv)
+[`models/heritage_object`](../models/heritage_object/) | [v1.8](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/heritage_object/heritage_object_v1.8.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/heritage_object/heritage_object_v1.8.tsv)
 
 This model defines the Heritage Object (E22) as the core object from which technical study data, and descriptive documentation are derived. It records ownership, collection context, dimensions, support, and medium, linking the artwork to its production event, associated documentation, and any related scientific or curatorial information. Together, these relationships provide a foundation for integrating technical study, provenance, and contextual research across connected datasets.
 
@@ -109,9 +109,30 @@ _A human-made work of art; the primary entity in this model, from which ownershi
 
 _\* Required status could not be derived from the model and has been set to required by default. Please verify._
 
+### Person
+
+[`models/person`](../models/person/) | [v1.2](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/person/person_v1.2.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/person/person_v1.2.tsv)
+
+This model identifies a person with PIDs, labels, and descriptions; records name parts and honorifics, external identifiers and web presence, research disciplines, life dates, affiliations, and optional contact details and residence.
+
+_An individual (historic or modern) acting in research, conservation, authorship, etc._
+
+| Required | Human understandable Label | Alternative Labels | CRM Code | Behaviour | Label Description |
+|----------|---------------------------|-------------------|----------|-----------|-------------------|
+| ✓ | Persistent Identifier (PID) | External ID | E42 | ![behaviour: External ID](https://img.shields.io/badge/%2F%2F-External%20ID-0e7490) | A globally resolvable identifier for the person (e.g., Wikidata QID, ISNI). |
+| Optional | Unique System Label or ID | System Label or ID; Database or System ID/Label | E41 | ![behaviour: System ID](https://img.shields.io/badge/%2F%2F-System%20ID-57606a) | Required within some documentation or database systems, such as ResearchSpace required label. |
+| Optional | Given Name | First Name | E41 | ![behaviour: Free Text](https://img.shields.io/badge/%2F%2F-Free%20Text-0969da) | The person's given/first name as an appellation. |
+| Optional | Family Name | Surname | E41 | ![behaviour: Free Text](https://img.shields.io/badge/%2F%2F-Free%20Text-0969da) | The person's family/last name as an appellation. |
+| Optional | Honorific / Title | -- | E41 | ![behaviour: Controlled List](https://img.shields.io/badge/%2F%2F-Controlled%20List-1a7f37) | Honorifics or titles (e.g., Dr, Prof, Sir). |
+| Optional | Description Text | Person Description | E73 | ![behaviour: Free Text](https://img.shields.io/badge/%2F%2F-Free%20Text-0969da) | Free-text biographical or role description. |
+| Optional | Place (Residence) | Residence of Person | E53 | ![behaviour: Select Entity](https://img.shields.io/badge/%2F%2F-Select%20Entity-8250df) | A place where the person lives/lived. |
+| Optional | Organisation (Affiliation) | Affiliated Organisation | E74 | ![behaviour: Select Entity](https://img.shields.io/badge/%2F%2F-Select%20Entity-8250df) | An organisation or group the person is/was affiliated with or a member of. |
+| Optional | Birth Date | Date of Birth; Year Born | E52 | ![behaviour: Free Text](https://img.shields.io/badge/%2F%2F-Free%20Text-0969da) | Time-span for birth. |
+| Optional | Death Date | Date of Death; Year Died | E52 | ![behaviour: Free Text](https://img.shields.io/badge/%2F%2F-Free%20Text-0969da) | Time-span for death. |
+
 ### Project
 
-[`models/project`](../models/project/) | [v1.3](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/project/project_v1.3.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/project/project_v1.3.tsv)
+[`models/project`](../models/project/) | [v1.3](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/project/project_v1.3.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/project/project_v1.3.tsv)
 
 This model defines a Project (E7) as a high-level activity used to group and manage related work (e.g., sampling campaigns, research initiatives, surveys). It brings together identifiers, title, ownership and participation, a short descriptive summary, dates/time-span, related documentation, and simple status/type flags. Projects may optionally sit within a broader parent project or programme.
 
@@ -133,7 +154,7 @@ _An organised activity or campaign with a defined purpose, scope, ownership, and
 
 ### Sample
 
-[`models/sample`](../models/sample/) | [v1.9](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample/sample_v1.9.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample/sample_v1.9.tsv)
+[`models/sample`](../models/sample/) | [v1.9](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/sample/sample_v1.9.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/sample/sample_v1.9.tsv)
 
 This model defines a Sample using a dual-layer structure: E22 (Physical Sample) is the curated physical artefact carrying persistent identifiers, custody, condition records, and images; S13 (Material Sample) is the removed matter that is the subject of scientific events. Both are created through a Sample Taking event. The E22 carries/contains the S13 via P46. Connections to other models (Heritage Object, Sample Site, analytical events) are distributed across both entities as semantically appropriate.
 
@@ -169,7 +190,7 @@ _\* Required status could not be derived from the model and has been set to requ
 
 ### Sample site
 
-[`models/sample_site`](../models/sample_site/) | [v1.6](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample_site/sample_site_v1.6.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample_site/sample_site_v1.6.tsv)
+[`models/sample_site`](../models/sample_site/) | [v1.6](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/sample_site/sample_site_v1.6.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/sample_site/sample_site_v1.6.tsv)
 
 This model defines the relationships surrounding the Sample Site within the context of sampling events on paintings following CIDOC CRM and CRMsci principles. The Sample Site (E26) represents the precise point or small area on the painting from which a material sample was taken. It is physically located on the painting or a defined Painting Part (E22) and may also be situated within a broader Area of Interest (E26) allowing multiple related sampling points or observations to be grouped together. Each Sample Site can be linked to digital image regions that visually represent its position and to descriptive or contextual notes incorporated within related documents. The model records both its role in the Sample Taking event (S2) and its former association with the removed Sample (S13). These relationships establish a clear and reusable structure for documenting where samples originate how they are contextualized within the painting and how they relate to analytical and descriptive records across digital and physical domains.
 
@@ -199,7 +220,7 @@ _\* Required status could not be derived from the model and has been set to requ
 
 ### Sample taking
 
-[`models/sample_taking`](../models/sample_taking/) | [v1.7](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample_taking/sample_taking_v1.7.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sample_taking/sample_taking_v1.7.tsv)
+[`models/sample_taking`](../models/sample_taking/) | [v1.7](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/sample_taking/sample_taking_v1.7.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/sample_taking/sample_taking_v1.7.tsv)
 
 This model captures metadata specific to an individual sample taking event within a broader Sampling Activity. Many fields here are optional because values defined at the Sampling Activity level -- such as date, method, location, and responsible actor -- apply to all sample takings within that activity and do not need to be repeated unless they differ for this specific event. Fields that are always recorded at this level include the link to the sample produced, the sample site, the heritage object, and the system identifier.
 
@@ -225,7 +246,7 @@ _\* Required status could not be derived from the model and has been set to requ
 
 ### Sampling activity
 
-[`models/sampling_activity`](../models/sampling_activity/) | [v1.2](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sampling_activity/sampling_activity_v1.2.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/sampling_activity/sampling_activity_v1.2.tsv)
+[`models/sampling_activity`](../models/sampling_activity/) | [v1.2](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/sampling_activity/sampling_activity_v1.2.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/sampling_activity/sampling_activity_v1.2.tsv)
 
 This model defines a broader Sampling Activity (E7) at the Object level, that groups shared metadata (who, when, where, why, and documentation) for one or more individual sample extraction activities. Each extraction is represented as a nested S2: Sample Taking event linked from the Sampling Activity. This allows shared context to be captured once, while extraction-specific links (sample site, removed sample, and observation) are recorded per individual Sample Taking event.
 

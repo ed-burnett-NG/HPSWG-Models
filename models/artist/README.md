@@ -1,6 +1,6 @@
-# Timespan
+# Artist
 
-![Status: Precursor](https://img.shields.io/badge/status-precursor-orange)
+![Status: Planned](https://img.shields.io/badge/status-planned-lightgrey)
 
 This folder contains versioned model files for use with the [National Gallery Dynamic Modeller](https://research.nationalgallery.org.uk/lab/modelling/). Models are expressed as tab-separated triples aligned to CIDOC CRM and related extension ontologies.
 
@@ -15,13 +15,7 @@ See [`ONTOLOGIES.md`](../ONTOLOGIES.md) for full version details, source links, 
 | [CRMsci](https://cidoc-crm.org/crmsci/ModelVersion/crmsci-3.0) | 3.0 | `crmsci` |
 | [ResearchSpace](https://github.com/researchspace/researchspace) | _see notes_ | `rs` |
 
-## Precursor files
-
-> **Status: Precursor** -- This model is in early development. The files below contain field mapping notes and draft content that will form the basis of the TSV model.
-
-| File | Raw link |
-|------|----------|
-| `timespan_precursor_v1.0.txt` | [View raw](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/timespan/timespan_precursor_v1.0.txt) |
+> **Status: Planned** -- This model folder is reserved for future development. No files are available yet.
 
 ## Contributing
 

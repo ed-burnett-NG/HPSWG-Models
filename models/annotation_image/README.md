@@ -18,11 +18,11 @@ See [`ONTOLOGIES.md`](../ONTOLOGIES.md) for full version details, source links, 
 ## Model versions
 
 <details>
-<summary><strong>Annotation image</strong>: latest version <a href="https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv">v0.1</a></summary>
+<summary><strong>Annotation image</strong>: latest version <a href="https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv">v0.1</a></summary>
 
 | | Version | Created | Last modified | Open in Modeller |
 | :---: | :---: | :---: | :---: | --- |
-| :heavy_check_mark: | v0.1 | 2026-04-11 | 2026-04-12 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv) |
+| :heavy_check_mark: | v0.1 | 2026-04-11 | 2026-04-12 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv) |
 
 </details>
 
@@ -30,7 +30,7 @@ See [`ONTOLOGIES.md`](../ONTOLOGIES.md) for full version details, source links, 
 
 This table lists the fields defined for data entry or display, derived from `//field` and `//field-via` directives in the model. See the [forms folder](../../forms/field-tables.md) for the aggregated cross-model view.
 
-[`models/annotation_image`](../models/annotation_image/) | [v0.1](https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv)
+[`models/annotation_image`](../models/annotation_image/) | [v0.1](https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv) | [Open in Modeller](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/annotation_image/annotation_image_v0.1.tsv)
 
 This model records a digital image used as an annotation base. It captures identification, image metadata, capture provenance, rights, annotation group classification, and links to the heritage object depicted. The image may also be linked optionally to a dataset record where it forms part of a formal analytical output. Annotation of the image itself -- the spatial recording of sample sites, areas of interest, and examination positions -- is handled in the annotation_image workflow and related models, not here.
 

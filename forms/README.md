@@ -29,6 +29,7 @@ Fields without a behaviour badge have not yet been tagged. See [CONTRIBUTING.md]
 | Annotation image | [field-tables.md](field-tables.md#annotation-image) |
 | Data set | [field-tables.md](field-tables.md#data-set) |
 | Heritage object | [field-tables.md](field-tables.md#heritage-object) |
+| Person | [field-tables.md](field-tables.md#person) |
 | Project | [field-tables.md](field-tables.md#project) |
 | Sample | [field-tables.md](field-tables.md#sample) |
 | Sample site | [field-tables.md](field-tables.md#sample-site) |

@@ -18,12 +18,12 @@ See [`ONTOLOGIES.md`](../ONTOLOGIES.md) for full version details, source links, 
 ## Model versions
 
 <details>
-<summary><strong>Observation</strong>: latest version <a href="https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/observation/observation_v1.0.tsv">v1.0</a></summary>
+<summary><strong>Observation</strong>: latest version <a href="https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/observation/observation_v1.0.tsv">v1.0</a></summary>
 
 | | Version | Created | Last modified | Open in Modeller |
 | :---: | :---: | :---: | :---: | --- |
-| :heavy_check_mark: | v1.0 | 2026-04-10 | 2026-04-10 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/observation/observation_v1.0.tsv) |
-|  | v0.1 | 2026-03-18 | 2026-04-10 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/RICHeS-UKRI/HPSWG-Models/refs/heads/main/models/observation/observation_v0.1.tsv) |
+| :heavy_check_mark: | v1.0 | 2026-04-10 | 2026-04-10 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/observation/observation_v1.0.tsv) |
+|  | v0.1 | 2026-03-18 | 2026-04-10 | [Open](https://research.nationalgallery.org.uk/lab/modelling/?url=https://raw.githubusercontent.com/ed-burnett-NG/HPSWG-Models/refs/heads/main/models/observation/observation_v0.1.tsv) |
 
 </details>
 
